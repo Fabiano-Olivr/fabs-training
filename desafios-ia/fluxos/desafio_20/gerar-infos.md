@@ -2,28 +2,37 @@
 
 ## Objetivo
 
-Gerar um objeto contendo contendo as informações de reposição.
+Obter informações dos dois vetores recebidos como argumetos e executar uma função com essas informações.
 
 ## Fluxo
 
 ```text
-╭─────────────────────────────────────────╮
-│ gerarInfos(vetorProdutos, vetorOriginal)│
-╰─────────────────────────────────────────╯
-                │
-                │
-                ▼
-┌──────────────────────────┐
-│criar const infos = {     │
-│ quantidadeProdutosRepo,  │
-│ nomesProdutosRepo: [],   │
-│ porcentagemProdutosRepo  │
-│}                         │
-└──────────────────────────┘
-            │
-            │
-            ▼
-┌──────────────────────┐
-│return infos          │
-└──────────────────────┘
+            (-------------------------------------------------------)
+            |processarEstoque(produtos, produtosFiltrados, callback)|
+            (------------------+------------------------------------)
+                               |
+      +------------------------v---------------------------------+
+      | const produtosEstoque = produtos.reduce((acc, prod) => { |
+      |     return `${prod.nome} (${estoque} und(s))\n`          |
+      | },"");                                                   |
+      +------------------------+---------------------------------+
+                               |
+  +----------------------------v----------------------------------------+
+  | const produtosParaRepor = produtosFiltrados.reduce((acc, prod) => { |
+  |     return `${prod.nome} (${estoque} und(s))\n`;                    |
+  | },"");                                                              |
+  +----------------------------+----------------------------------------+
+                               |
+         +---------------------v----------------------------+
+         | const qtdRepo = produtosFiltrados.length;        |
+         | const porcentagemRepo = qtdRepo / produtos.length|
+         +---------------------+----------------------------+
+                               |
+        +----------------------v-------------------------------+
+        |callback(txtProdutos, txtFiltro, qtdRepo, porcentagem)|
+        +----------------------+-------------------------------+
+                               |
+                           (---v-----)
+                           |fimFuncao|
+                           (---------)
 ```

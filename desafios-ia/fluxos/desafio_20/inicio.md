@@ -7,28 +7,23 @@ Criar um vetor de objetos contendo pelo menos 8 produtos. Cada produto possuindo
 ## Fluxo
 
 ```text
-╭──────────────╮
-│   INÍCIO     │
-╰──────────────╯
-    │
-    │
-    ▼
-┌─────────────────────────────────────┐
-│ const produtos = gerarProdutos();   │
-└─────────────────────────────────────┘
-    │
-    │
-    ▼
-┌─────────────────────────────────────────┐
-│ const infosEstoque =                    │
-│ verificarReposicao(produtos, gerarInfos)│
-└─────────────────────────────────────────┘
-    │
-    │
-    ▼
-┌─────────────────────────────────────────┐
-│ exibir Informações com delay de 3s      │
-└─────────────────────────────────────────┘
+                      (------)
+                      |inicio|
+                      (---+--)
+                          |
+   +----------------------v------------------------------+
+   | const produtos = gerarProdutos();                   |
+   | const produtosFiltrados = filtrarProdutos(produtos) |
+   +----------------------+------------------------------+
+                          |
+                          |
+  +-----------------------v-------------------------------------+
+  |processarEstoque(produtos, produtosFiltrados, atualizarHTML) |
+  +-----------------------+-------------------------------------+
+                          |
+                      (---v--)
+                      | fim  |
+                      (------)
 ```
 
 ## Regras de Negócio

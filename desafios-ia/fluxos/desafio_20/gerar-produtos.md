@@ -7,34 +7,38 @@ Criar um vetor de objetos contendo pelo menos 8 produtos. Cada produto possuindo
 ## Fluxo
 
 ```text
-╭──────────────────╮
-│  gerarProdutos() │
-╰──────────────────╯
-        │
-        │
-        ▼
-┌──────────────────────────┐
-│criar const prdutos = []; │
-│gerar nº aleatório (8-15);│
-└──────────────────────────┘
-            │
-            │
-            ▼
-    ┌────────────────────┐
-    │ i < nº Aleatório ? │
-    └───┬──────────────┬─┘
-      Sim              Não
-       │                │
-       ▼                ▼
-┌──────────────┐    ┌──────────┐
-│criar objeto  │    │ return   │
-│prodTemp {}   │    │ produtos │ 
-│              │    └──────────┘ 
-│produtos.push(│
-│prodTemp)     │        
-└──────┬───────┘
-       │
-       │
-       └──────────────► (volta para "Condição?")
-
+                             (-------------)
+                             |gerarProdutos|
+                             (-------+-----)
+                                     |
+                                     |
+                      +--------------v-------------------+
+                      | const produtos = [];             |
+                      | const qtdProds = gerarNum(8, 15) |
+                      +--------------+-------------------+
+                                     |
+                                     |
+                                     v
+                                /       \
+                           < i < qtdProds  >  NÃO
+  |-------------------->       \    ?    /   ------------------------------+
+  |                               \   /                                    |
+  |                                  |                                     |
+  |                                  | SIM                                 |
+  |                                  |                                     |
+  |                                  |                                     |
+  |                      +-----------v-------------+                       |
+  |                      | const produtoGerado = { |                       |
+  |                      | id,                     |               +-------v-------+
+  |                      | nome,                   |               |return produtos|
+  |                      | estoqueMin,             |               +---------------+
+  |                      | estoque                 |
+  |                      | }                       |
+  |                      +-----------+-------------+
+  |                                  |
+  |                                  |
+  |                                  |
+  |                    +-------------v---------------+
+  +--------------------|produtos.push(produto gerado)|
+                       +-----------------------------+
 ```

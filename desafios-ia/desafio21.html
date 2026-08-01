@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="css/estilos.css">
+    <title>Desafio 21</title>
+</head>
+
+<body>
+    <header class="cabecalho">
+        <h1>Ranking de Vendedores</h1>
+        <small>Desafio 21 - IA</small>
+    </header>
+
+    <div class="conteiner-conteudo">
+        <main class="main-duplo">
+            <section class="secao-entradas vendedor">
+                <h2>Cadastro de Novo Vendedor</h2>
+                <form id="formulario-cadastro-vendedor">
+                    <label for="inNome">Nome:</label>
+                    <input type="text" id="inNome" maxlength="60" placeholder="Nome Completo" required autofocus>
+                    <button type="submit" id="btCadastrar">Cadastrar</button>
+                </form>
+            </section>
+            
+            <section class="secao-entradas vendas">
+                <h2>Cadastro de Vendas</h2>
+                <form id="formulario-vendas">
+                    <label for="selectVendedor">Selecione um Vendedor</label>
+                    <select name="vendedor" id="selectVendedor" required>
+                        <option value="" selected disabled>Selecionar...</option>
+                    </select>
+                    <label for="inVendas">Quantidade de Vendas:</label>
+                    <input type="number" id="inVendas" step="1" min="0" required>
+                    <button type="submit" id="btVenda">Cad. Venda</button>
+                </form>
+            </section>
+
+            <section class="secao-saida ranking">
+                <h2>Ranking de Vendas</h2>
+                <section id="outRanking"><pre>Nenhuma Venda Cadastrada</pre></section>
+            </section>
+
+            <section class="secao-saida metricas">
+                <h2>Métricas do Mês - Empresa</h2>
+                <section id="outMetricas"><pre>Nenhuma Venda Cadastrada</pre></section>
+            </section>
+        </main>
+    </div>
+
+    <footer class="rodape">
+        <p>by Fabiano O.</p>
+        <small>&copy; 2026</small>
+    </footer>
+
+    <script src="js/desafio21.js" defer></script>
+</body>
+
+</html>

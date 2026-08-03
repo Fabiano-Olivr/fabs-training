@@ -1,6 +1,6 @@
 # 🤖 Desafio: Organizador de Agenda
 
-**Contexto:** Uma agenda possui vários compromissos em diferentes datas.
+**Contexto:** Uma agenda possui vários compromissos em diferentes datas.  
 **O que fazer:** Crie um vetor de objetos contendo `descricao` e `data` (utilizando `Date`).
 
 **Exiba:**

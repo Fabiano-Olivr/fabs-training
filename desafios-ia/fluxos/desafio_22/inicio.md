@@ -9,24 +9,24 @@ já passaram, quantos ainda irão acontecer e qual será o próximo compromisso.
 
 *! Para melhor Visualização do fluxograma, desabilite a quebra de linha*
 <pre style="white-space: pre; overflow-x: auto; font-family: monospace;">
-                      (----------)
-                      |  inicio  |
-                      (-----+----)
-                            |
-                            |
-                            |
-          +-----------------v---------------------------+
-          |  const compromissos = criarCompromissos();  |
-          +-----------------+---------------------------+
-                            |
-                            |
-    +-----------------------v----------------------------------+
-    |  listarCompromissosPassados(compromissos, atualizarUI);  |
-    |  listarCompromissosFuturos(compromissos, atualizarUI);   |
-    |  mostrarProximoCompromisso(compromissos, atualizarUI);   |
-    +-----------------------+----------------------------------+
-                            |
-                       (----v----)
-                       |   fim   |
-                       (---------)
+                       (----------)
+                       |  inicio  |
+                       (-----+----)
+                             |
+                             |
+                             |
+           +-----------------v---------------------------+
+           |  const compromissos = criarCompromissos();  |
+           +-----------------+---------------------------+
+                             |
+                             |
+    +------------------------v------------------------------------+
+    |   listarCompromissos("todos", compromissos, atualizarUI);   |
+    |  listarCompromissos("passado", compromissos, atualizarUI);  |
+    |   listarCompromissos("prox", compromissos, atualizarUI);    |
+    +------------------------+------------------------------------+
+                             |
+                        (----v----)
+                        |   fim   |
+                        (---------)
 </pre>

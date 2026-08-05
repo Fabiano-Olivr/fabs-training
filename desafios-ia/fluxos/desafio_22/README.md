@@ -9,11 +9,15 @@
 * Qual será o próximo compromisso.
 
 ## 🎯 Aprendizados Praticados
-- 
+- Funções;
+- Objetos;
+- Vetores e métodos de Vetores;
+- Date e métodos Date;
+- Condições e Repetições;
 
 ## 📝 Feedback da IA
 
-> 
+> O estado da aplicação foi centralizado em um único objeto, a lógica de filtragem foi desacoplada da atualização da interface por meio de callbacks, e a renderização foi isolada em funções específicas. Também foram utilizados métodos modernos de manipulação de arrays (filter, slice) para tornar o código mais declarativo e legível. O um dos principais pontos a ser refatorado é `montarSecao(...)();` que, nesse contexto, retornar uma função não traz benefício e acaba adicionando complexidade desnecessária.
 > 
 
 ## 👨‍💻 Autor

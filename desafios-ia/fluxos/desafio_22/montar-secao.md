@@ -14,17 +14,17 @@ Retornar uma função que cria os cards de uma seção definida e atualiza ela.
                        |
                        |
                        |
-      /----------------v-------------------------/
-     / return function () {                     /
-     /     compromissos.forEach(compromisso) {  /
-     /        // montar um cartão para cada     /
-     /        compromisso, e adiciona a secao.  /
-     /     }                                    /
-     / }                                        /
-    /-----------------+------------------------/
-                      |
-                      |
-                 (----v--------)
-                 |  fimFuncao  |
-                 (-------------)
+      +----------------v-----------------------+
+      |  compromissos.forEach(compromisso) {   |
+      |      // montar um cartão para cada     |
+      |      compromisso, e adiciona a secao.  |
+      |  }                                     |
+      +----------------+-----------------------+
+                       |
+                       |
+                       |
+                       |
+                  (----v--------)
+                  |  fimFuncao  |
+                  (-------------)
 </pre>

@@ -46,40 +46,40 @@ function criarCompromissos() {
 }
 
 function montarSecao(compromissos, secao) {
-    return function () {
-        const secaoUpdate = secao;
-        secaoUpdate.innerHTML = "";
+    secao.innerHTML = "";
 
-        compromissos.forEach(compromisso => {
-            const cartaoCompromisso = document.createElement("div");
-            cartaoCompromisso.classList.add("cartao");
-            cartaoCompromisso.innerHTML = `
+    compromissos.forEach(compromisso => {
+        const cartaoCompromisso = document.createElement("div");
+        cartaoCompromisso.classList.add("cartao");
+        cartaoCompromisso.innerHTML = `
                 <p><strong>Compromisso:</strong> ${compromisso.descricao}</p>
                 <p><strong>Data:</strong> ${compromisso.date.toLocaleDateString("pt-BR")} 
                     <strong>Horário: </strong> ${compromisso.date.toLocaleTimeString("pt-BR")}</p>
             `;
-            secaoUpdate.appendChild(cartaoCompromisso);
-        });
-    }
+        secao.appendChild(cartaoCompromisso);
+    });
 }
 
 // FUNÇÕES PRINCIPAIS
 function iniciarEventos() {
     ESTADOS_SISTEMA.listaCompromissos = criarCompromissos();
-    listarCompromissos("todos", ESTADOS_SISTEMA.listaCompromissos, atualizarUI);
-    listarCompromissos("passado", ESTADOS_SISTEMA.listaCompromissos, atualizarUI);
-    listarCompromissos("prox", ESTADOS_SISTEMA.listaCompromissos, atualizarUI);
+    filtrarCompromissos("todos", ESTADOS_SISTEMA.listaCompromissos, atualizarUI);
+    filtrarCompromissos("passado", ESTADOS_SISTEMA.listaCompromissos, atualizarUI);
+    filtrarCompromissos("prox", ESTADOS_SISTEMA.listaCompromissos, atualizarUI);
 }
 
-function listarCompromissos(periodoTemporal, compromissos, callback) {
+function filtrarCompromissos(periodoTemporal, compromissos, callback) {
     let compromissosFiltrados = [];
+    const hoje = new Date();
 
     if (periodoTemporal === "todos") {
         compromissosFiltrados = compromissos.slice();
     } else if (periodoTemporal === "passado") {
-        compromissosFiltrados = compromissos.filter(comp => comp.date < new Date());
+        compromissosFiltrados = compromissos.filter(comp => comp.date < hoje);
     } else {
-        compromissosFiltrados = compromissos.filter(comp => comp.date >= new Date()).slice(0, 1);
+        compromissosFiltrados = compromissos.filter(comp => comp.date >= hoje)
+            .sort((a, b) => a.date - b.date)
+            .slice(0, 1);
     }
     callback(compromissosFiltrados, periodoTemporal);
 }

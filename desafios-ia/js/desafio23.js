@@ -52,7 +52,51 @@ function gerarCadastros(qtdCadastros) {
     return cadastrosGerados;
 }
 
+function validarNome(nome) {
+    let isValido = true;
+    if (nome.length === "" || !isNaN(nome)) {
+        isValido = false;
+    } else if (!!nome.match(/([^a-zA-z ])/gi)) {
+        isValido = false;
+    }
+    return isValido;
+}
+
+function validarEmail(email) {
+    const isValido = !!email.match(/^\w+@[a-z]{3,}(\.\w{2,})+$/);
+    return isValido;
+}
+
 // FUNÇÕES PRINCIPAIS
 function iniciar() {
     ESTADOS_SISTEMA.cadastros = gerarCadastros(gerarNum(1, 20));
+    ESTADOS_SISTEMA.cadsInvalidos = filtrarCadastros(ESTADOS_SISTEMA.cadastros);
+}
+
+function filtrarCadastros(cadastros) {
+    let logErros = "";
+    const cadsInvalidos = [];
+
+    cadastros.forEach(cad => {
+        if (!validarNome(cad.nome)) {
+            logErros += "* Nome não Definido/Inválido\n";
+        }
+        if (!validarEmail(cad.email)) {
+           logErros += "* E-Mail Inválido\n"; 
+        }
+        if (cad.idade < 18) {
+            logErros += "* Menor de 18 Anos\n";
+        }
+
+        if (logErros != "") {
+            cadsInvalidos.push(
+                {
+                    ...cad,
+                    erros: logErros
+                }
+            )
+        }
+    });
+
+    return cadsInvalidos;
 }

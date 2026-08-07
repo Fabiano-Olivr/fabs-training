@@ -11,9 +11,9 @@ const ESTADOS_SISTEMA = {
 }
 
 // REFERÊNCIAS AOS ELEMENTOS HTML
-const outQtdValidos = document.querySelector("#outQtdValidos");
-const outQtdInvalidos = document.querySelector("#outQtdInvalidos");
-const outErros = document.querySelector("#outErros");
+const outQtdValidos = document.getElementById("outQtdValidos");
+const outQtdInvalidos = document.getElementById("outQtdInvalidos");
+const outErros = document.getElementById("outErros");
 
 // INICIALIZAÇÃO
 iniciar();
@@ -26,11 +26,11 @@ function gerarNum(min, max) {
 // FUNÇÕES AUXILIÁRES
 function gerarCadastros(qtdCadastros) {
     const cadastrosGerados = [];
-    const nomes = ["", "Maria Oliveira", "Pedro Santos", "Ana Souza", "Carlos Ferreira", "",
+    const nomes = ["Marcos Silva", "Maria Oliveira", "Pedro Santos", "Ana Souza", "Carlos Ferreira", "",
         "Juliana Lima", "Rafael Costa", "#.", "", "Camila Barbosa", "Gabriel Martins",
-        "Beatriz Gomes", "Thiago Pereira", "1"];
+        "Beatriz 2", "Thiago Pereira", "1"];
     const emails = ["@gmail.com", "@outlook.com", "@hotmail.com", "@yahoo.com.br",
-        "@icloud.com", "", "@dominio", "@mail@", "@teste..com", "", "@universidade.edu.br",
+        "@icloud.com", "@empresa.com.br", "@dominio", "@mail@", "@teste..com", "", "@universidade.edu.br",
         "@123.com", "@.com", "@email#dominio.com", "@1"];
     const qtdNomes = nomes.length;
 
@@ -44,7 +44,7 @@ function gerarCadastros(qtdCadastros) {
             id: crypto.randomUUID().substring(0, 4),
             nome: nomeAleatorio,
             email: emailAleatorio,
-            idade: gerarNum(1, 30)
+            idade: gerarNum(12, 25)
         }
         cadastrosGerados.push(cadastro);
     }
@@ -67,17 +67,24 @@ function validarEmail(email) {
     return isValido;
 }
 
+function atualizarUI(qtdValidos, qtdInvalidos, motivosErros) {
+    outQtdValidos.value = qtdValidos;
+    outQtdInvalidos.value = qtdInvalidos;
+    outErros.innerText = motivosErros;
+}
+
 // FUNÇÕES PRINCIPAIS
 function iniciar() {
     ESTADOS_SISTEMA.cadastros = gerarCadastros(gerarNum(1, 20));
     ESTADOS_SISTEMA.cadsInvalidos = filtrarCadastros(ESTADOS_SISTEMA.cadastros);
+    gerarRelatorios(ESTADOS_SISTEMA.cadastros, ESTADOS_SISTEMA.cadsInvalidos, atualizarUI);
 }
 
 function filtrarCadastros(cadastros) {
-    let logErros = "";
     const cadsInvalidos = [];
-
+    
     cadastros.forEach(cad => {
+        let logErros = "";
         if (!validarNome(cad.nome)) {
             logErros += "* Nome não Definido/Inválido\n";
         }
@@ -99,4 +106,14 @@ function filtrarCadastros(cadastros) {
     });
 
     return cadsInvalidos;
+}
+
+function gerarRelatorios(cadastros, cadsInvalidos, callback) {
+    const qtdInvalidos = cadsInvalidos.length;
+    const qtdValidos = cadastros.length - qtdInvalidos;
+    const motivosErros = cadsInvalidos.map(cad => 
+        cad.motivosErros = `Cadastro ${cad.id}\n${cad.erros}\n`
+    ).join("");
+
+    callback(qtdValidos, qtdInvalidos, motivosErros);
 }

@@ -54,17 +54,17 @@ function gerarCadastros(qtdCadastros) {
 
 function validarNome(nome) {
     let isValido = true;
-    if (nome.length === "" || !isNaN(nome)) {
+    if (nome.trim() === "" || !isNaN(nome)) {
         isValido = false;
-    } else if (!!nome.match(/([^a-zA-z ])/gi)) {
+    } else if (!!nome.match(/([^a-zA-Z ])/gi)) {
         isValido = false;
     }
     return isValido;
 }
 
 function validarEmail(email) {
-    const isValido = !!email.match(/^\w+@[a-z]{3,}(\.\w{2,})+$/);
-    return isValido;
+    const regEx = /^\w+@[a-z]{3,}(\.\w{2,})+$/;
+    return regEx.test(email);
 }
 
 function atualizarUI(qtdValidos, qtdInvalidos, motivosErros) {
@@ -112,7 +112,7 @@ function gerarRelatorios(cadastros, cadsInvalidos, callback) {
     const qtdInvalidos = cadsInvalidos.length;
     const qtdValidos = cadastros.length - qtdInvalidos;
     const motivosErros = cadsInvalidos.map(cad => 
-        cad.motivosErros = `Cadastro ${cad.id}\n${cad.erros}\n`
+        `Cadastro ${cad.id}\n${cad.erros}\n`
     ).join("");
 
     callback(qtdValidos, qtdInvalidos, motivosErros);

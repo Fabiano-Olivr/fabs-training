@@ -10,14 +10,12 @@ const ESTADOS = {
 };
 
 // REFERÊNCIA AOS ELEMENTOS HTML
-const formularioBusca = document.querySelector("#formulario-busca");
 const inBusca = document.querySelector("#inBusca");
-const btBuscar = document.querySelector("#btBuscar");
-const btLimpar = document.querySelector("#btLimpar");
-const secaoResultado = document.querySelector("#outResultado");
+const outResultado = document.querySelector("#outResultado");
+const outQtdProdutos = document.querySelector("#outQtdProdutos");
 
 // INICIALIZAÇÃO
-// iniciar();
+iniciar();
 
 // UTILITÁRIOS
 function gerarNumAleatorio(min, max) {
@@ -63,7 +61,35 @@ function gerarProdutos() {
     return produtosGerados;
 }
 
+function atualizarUI(produtos) {
+    outQtdProdutos.innerText = produtos.length;
+
+    if (produtos.length != 0) {
+        outResultado.innerText = produtos.reduce((acc, prod) => {
+            return acc += prod + "\n";
+        }, "");
+    } else {
+        outResultado.innerText = "Nenhum Produto Localizado!";
+    }
+}
+
 // FUNÇÕES PRINCIPAIS
 function iniciar() {
     ESTADOS.produtos = gerarProdutos();
+    atualizarUI(ESTADOS.produtos);
 }
+
+function buscarProdutos(produtos, textoBuscado, callback) {
+    const regEx = new RegExp(textoBuscado, "gi");
+
+    const produtosLocalizados = produtos.filter(prod => {
+        return regEx.test(prod);
+    });
+
+    callback(produtosLocalizados);
+}
+
+// EVENTOS
+inBusca.addEventListener("input", function () {
+    buscarProdutos(ESTADOS.produtos, inBusca.value.trim(), atualizarUI);
+});

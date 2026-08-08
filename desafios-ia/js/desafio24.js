@@ -50,9 +50,9 @@ function gerarProdutos() {
     for (let i = 0; i < qtdProdutos; i++) {
         let produto = sortearNome();
 
-        const isProdutoComposto = gerarNumAleatorio(0, 1) === 0 ? false : true;
+        const isProdutoComposto = gerarNumAleatorio(0, 1) === 0;
         if (isProdutoComposto) {
-            produto += ` ${sortearNome("composicao")}`;
+            produto += ` ${sortearNome(true)}`;
         }
 
         produtosGerados.push(produto);
@@ -64,10 +64,8 @@ function gerarProdutos() {
 function atualizarUI(produtos) {
     outQtdProdutos.innerText = produtos.length;
 
-    if (produtos.length != 0) {
-        outResultado.innerText = produtos.reduce((acc, prod) => {
-            return acc += prod + "\n";
-        }, "");
+    if (produtos.length !== 0) {
+        outResultado.innerText = produtos.join("\n");
     } else {
         outResultado.innerText = "Nenhum Produto Localizado!";
     }
@@ -79,17 +77,19 @@ function iniciar() {
     atualizarUI(ESTADOS.produtos);
 }
 
-function buscarProdutos(produtos, textoBuscado, callback) {
-    const regEx = new RegExp(textoBuscado, "gi");
+function buscarProdutos(produtos, textoBuscado) {
+    const regEx = new RegExp(textoBuscado, "i");
 
     const produtosLocalizados = produtos.filter(prod => {
         return regEx.test(prod);
     });
 
-    callback(produtosLocalizados);
+    atualizarUI(produtosLocalizados);
+    return produtosLocalizados;
 }
 
 // EVENTOS
 inBusca.addEventListener("input", function () {
-    buscarProdutos(ESTADOS.produtos, inBusca.value.trim(), atualizarUI);
+    const textoEscapado = inBusca.value.trim().replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
+    buscarProdutos(ESTADOS.produtos, textoEscapado);
 });

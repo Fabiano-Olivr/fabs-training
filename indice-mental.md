@@ -7,7 +7,7 @@
 │   ├── Procurar
 │   │   ├── indexOf()         → retorna a primeira posição encontrada
 │   │   ├── lastIndexOf()     → retorna a última posição encontrada
-│   │   ├── find()             → retorna o primeiro elemento de um vetor que satisfaça uma condição
+│   │   ├── find()            → retorna o primeiro elemento de um vetor que satisfaça uma condição
 │   │   │   vetor.find(elemento => condicao/funcao);
 │   │   │   ⚠️ Não retorna uma cópia de objetos. Retorna uma referência ao objeto que está no vetor
 │   │   │
@@ -95,26 +95,42 @@
 ├── STRINGS
 │
 │   ├── Buscar
-│   │   ├── search()          → procura usando padrão
-│   │   ├── match()           → retorna correspondências
+│   │   ├── search()          → procura a primeira correspondência usando padrão e retorna o índice de onde ela começa
+│   │   │   string.search(regexp) ou string.search(valor)
+│   │   │   ⚠️ ignora a flag 'g'
+│   │   │
+│   │   ├── match()           → retorna correspondências de um valor em uma string
+│   │   │   let resultado = string.match(match)
+│   │   │   ⚠️ O parâmetro match deve ser uma /expressaoRegular/gi ou um /texto/gi
+│   │   │
 │   │   ├── indexOf()         → primeira ocorrência
 │   │   └── lastIndexOf()     → última ocorrência
+│   │       ⚠️ indexOf() e lastIndexOf() retornam -1 se a busca não for localizada na String
 │   │
 │   ├── Verificar
 │   │   ├── includes()        → verifica se contém um valor especificado
-│   │   ├── startsWith()      → verifica começa com um valor especificado
-│   │   └── endsWith()        → verifica termina com um valor especificado
+│   │   ├── startsWith()      → verifica a string começa com um valor especificado
+│   │   └── endsWith()        → verifica a string  termina com um valor especificado
 │   │
 │   ├── Extrair
-│   │   ├── slice()           → extrai trecho
-│   │   ├── substring()       → extrai por índices
-│   │   ├── charAt()          → caractere na posição
-│   │   ├── at()              → caractere na posição
-│   │   └── length            → quantidade de caracteres
+│   │   ├── slice()                 → extrai uma parte de uma string
+│   │   │   novaString = stringOriginal.slice(start, end)
+│   │   │   ⚠️ end não incluído
+│   │   │
+│   │   ├── substring()             → extrai por índices
+│   │   │   novaString = stringOriginal.substring(start, end)
+│   │   │   ⚠️ end não incluído
+│   │   │
+│   │   ├── charAt(), at() e []     → caractere em indice/posição específica
+│   │   └── length                  → quantidade de caracteres
 │   │
 │   ├── Alterar
 │   │   ├── replace()         → substitui primeira ocorrência (Localizar e Substituir)
+│   │   │   let novaString = stringOriginal.replace(termoBuscado, termoSubstituto)
+│   │   │
 │   │   ├── replaceAll()      → substitui todas as ocorrências
+│   │   │   let novaString = stringOriginal.replaceAll(termoBuscado, termoSubstituto)
+│   │   │
 │   │   ├── trim()            → remove espaços laterais
 │   │   ├── trimStart()       → remove espaços iniciais
 │   │   └── trimEnd()         → remove espaços finais
@@ -124,26 +140,36 @@
 │   │   ├── toLowerCase()     → converte para minúsculas
 │   │   ├── padStart()        → completa no início
 │   │   └── padEnd()          → completa no final
+│   │       stringOriginal.padStart(tamanhoAlvo, StringDePreenchimento)
 │   │
 │   ├── Converter
 │   │   ├── split()           → quebra em array
 │   │   ├── concat()          → junta strings
+│   │   │   text3 = text1.concat(text2)
+│   │   │
 │   │   ├── repeat()          → repete texto
+│   │   │   "*".repeat(3) // ***
+│   │   │
 │   │   └── fromCharCode()    → código para caractere
+│   │       String.fromCharCode(65) // "A"
 │   │
 │   ├── Template Strings
 │   │   └── `${}`             → insere variáveis
 │   │
 │   └── REGEX
+│       ├── Criar uma RegEx
+│       │   let expressReg = new RegExp(termo_de_busca, bandeiras_de_comportamento)
+│       │   let expressReg = /[a-z]/gi;
+│       │
 │       ├── Buscar
-│       │   └── match()           → encontra padrões e retorna um vetor com eles
+│       │   └── match()         → encontra padrões e retorna um vetor com eles
 │       │
 │       ├── Testar
-│       │   └── search()          → localiza padrão e retorna o índece onde começa
+│       │   └── search()        → localiza padrão e retorna o índece onde começa
 │       │
 │       └── Substituir
-│           ├── replace()         → troca padrão no texto
-│           └── replaceAll()      → troca todas ocorrências do padrão
+│           ├── replace()       → troca padrão no texto
+│           └── replaceAll()    → troca todas ocorrências do padrão
 │
 ├── NUMBERS
 │
@@ -193,7 +219,7 @@
 │   │   ├── Valores Padrão         → valor padrão atribuido a uma variável cado o valor retirado do vetor é undefined
 │   │   │   let [a = 5, b = 7] = [1] // a = 1; b = 7
 │   │   │
-│   │   ├── Troca de Variáveis         → possibilita trocar os valores de duas variáveis sem precisar de variável temporária
+│   │   ├── Troca de Variáveis     → possibilita trocar os valores de duas variáveis sem precisar de variável temporária
 │   │   │   [a, b] = [b, a]
 │   │   │
 │   │   └── Ignorar Valores         → ignorar valores das variáveis

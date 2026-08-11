@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CineSeridó - Gerenciamento</title>
+    <link rel="stylesheet" href="../css/estilo.css">
+</head>
+<body>
+
+    <!-- CABEÇALHO -->
+    <header class="cabecalho">
+        <div class="conteudo-cabecalho">
+            <h1 class="logo">CineSeridó</h1>
+            <nav class="navegacao">
+                <ul>
+                    <li><a href="../index.html">Home</a></li>
+                    <li><a href="sessoes.html">Sessões</a></li>
+                    <li><a href="gerenciamento.html" class="link-ativo">Gerenciamento</a></li>
+                    <li><a href="relatorio.html">Relatório</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <main class="container">
+        <!-- CADASTRO DE SESSÃO -->
+        <section class="caixa-conteudo">
+            <h2 class="titulo-secao">Cadastrar Nova Sessão</h2>
+            <!-- JS: Capturar o submit para adicionar nova sessão ao sistema -->
+            <form id="form-cadastro-sessao" class="formulario-grid">
+                <div class="grupo-campo">
+                    <label for="nome-filme">Nome do Filme:</label>
+                    <input type="text" id="nome-filme" required>
+                </div>
+
+                <div class="grupo-campo">
+                    <label for="numero-sala">Sala:</label>
+                    <input type="number" id="numero-sala" min="1" required>
+                </div>
+
+                <div class="grupo-campo">
+                    <label for="data-sessao">Data:</label>
+                    <input type="date" id="data-sessao" required>
+                </div>
+
+                <div class="grupo-campo">
+                    <label for="horario-sessao">Horário:</label>
+                    <input type="time" id="horario-sessao" required>
+                </div>
+
+                <div class="grupo-campo">
+                    <label for="capacidade-sala">Capacidade da Sala:</label>
+                    <input type="number" id="capacidade-sala" min="10" max="100" required>
+                </div>
+
+                <div class="grupo-campo">
+                    <label for="preco-ingresso">Preço do Ingresso (R$):</label>
+                    <input type="number" id="preco-ingresso" step="0.50" min="0" required>
+                </div>
+
+                <button type="submit" class="botao-primario">Cadastrar Sessão</button>
+            </form>
+        </section>
+
+        <!-- LISTA DE RESERVAS PARA CANCELAMENTO -->
+        <section class="caixa-conteudo">
+            <h2 class="titulo-secao">Reservas Ativas (Cancelamento)</h2>
+            <div class="tabela-container">
+                <table class="tabela-padrao">
+                    <thead>
+                        <tr>
+                            <th>Código</th>
+                            <th>Cliente</th>
+                            <th>Filme</th>
+                            <th>Assentos</th>
+                            <th>Ações</th>
+                        </tr>
+                    </thead>
+                    <tbody id="tabela-reservas">
+                        <!-- JS: Renderizar lista de reservas aqui -->
+                        <!-- Exemplo estático -->
+                        <tr>
+                            <td>#101</td>
+                            <td>Maria Silva</td>
+                            <td>Aventura no Sertão</td>
+                            <td>B2, B3</td>
+                            <!-- JS: Ação de cancelamento deve devolver assentos e desativar reserva -->
+                            <td><button class="botao-perigo">Cancelar</button></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </section>
+    </main>
+
+    <!-- RODAPÉ -->
+    <footer class="rodape">
+        <p>&copy; 2026 CineSeridó - Todos os direitos reservados.</p>
+    </footer>
+
+</body>
+</html>

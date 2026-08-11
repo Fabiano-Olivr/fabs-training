@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CineSeridó - Consultar Sessões</title>
+    <link rel="stylesheet" href="../css/estilo.css">
+</head>
+<body>
+
+    <!-- CABEÇALHO -->
+    <header class="cabecalho">
+        <div class="conteudo-cabecalho">
+            <h1 class="logo">CineSeridó</h1>
+            <nav class="navegacao">
+                <ul>
+                    <li><a href="../index.html">Home</a></li>
+                    <li><a href="sessoes.html" class="link-ativo">Sessões</a></li>
+                    <li><a href="gerenciamento.html">Gerenciamento</a></li>
+                    <li><a href="relatorio.html">Relatório</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <main class="container">
+        <!-- ÁREA DE FILTROS -->
+        <section class="caixa-conteudo">
+            <h2 class="titulo-secao">Buscar Sessões</h2>
+            <form class="formulario-filtro">
+                <div class="grupo-campo">
+                    <label for="filtro-filme">Filme:</label>
+                    <input type="text" id="filtro-filme" placeholder="Digite o nome do filme">
+                </div>
+                
+                <div class="grupo-campo">
+                    <label for="filtro-data">Data:</label>
+                    <input type="date" id="filtro-data">
+                </div>
+
+                <div class="grupo-campo">
+                    <label for="filtro-sala">Sala:</label>
+                    <select id="filtro-sala">
+                        <option value="">Todas as salas</option>
+                        <option value="1">Sala 1</option>
+                        <option value="2">Sala 2</option>
+                    </select>
+                </div>
+
+                <div class="grupo-campo campo-checkbox">
+                    <label>
+                        <input type="checkbox" id="filtro-disponivel"> Apenas com vagas
+                    </label>
+                </div>
+
+                <!-- JS: Adicionar evento para filtrar ao clicar ou digitar -->
+                <button type="button" class="botao-primario">Filtrar</button>
+            </form>
+        </section>
+
+        <!-- LISTA DE SESSÕES -->
+        <section class="secao-lista-sessoes">
+            <h2 class="titulo-secao">Sessões Disponíveis</h2>
+            
+            <div class="grid-sessoes" id="conteiner-sessoes">
+                <!-- JS: As sessões serão renderizadas dinamicamente aqui -->
+                
+                <!-- Exemplo de Card Estático (para referência visual) -->
+                <article class="card-sessao">
+                    <h3>Aventura no Sertão</h3>
+                    <p><strong>Sala:</strong> Sala 1</p>
+                    <p><strong>Data:</strong> 15/10/2026</p>
+                    <p><strong>Horário:</strong> 19:30</p>
+                    <p><strong>Vagas:</strong> 25/50</p>
+                    <a href="reserva.html" class="botao-sucesso">Reservar Assento</a>
+                </article>
+            </div>
+        </section>
+    </main>
+
+    <!-- RODAPÉ -->
+    <footer class="rodape">
+        <p>&copy; 2026 CineSeridó - Todos os direitos reservados.</p>
+    </footer>
+
+</body>
+</html>

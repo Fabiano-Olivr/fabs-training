@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CineSeridó - O Cinema do Seridó</title>
+    <link rel="stylesheet" href="css/estilo.css">
+</head>
+<body>
+
+    <!-- CABEÇALHO -->
+    <header class="cabecalho">
+        <div class="conteudo-cabecalho">
+            <h1 class="logo">CineSeridó</h1>
+            <nav class="navegacao">
+                <ul>
+                    <li><a href="index.html" class="link-ativo">Home</a></li>
+                    <li><a href="pages/sessoes.html">Sessões</a></li>
+                    <li><a href="pages/gerenciamento.html">Gerenciamento</a></li>
+                    <li><a href="pages/relatorio.html">Relatório</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <!-- BANNER PRINCIPAL -->
+    <section class="banner-principal">
+        <div class="banner-conteudo">
+            <h2>Bem-vindo ao CineSeridó</h2>
+            <p>O melhor da sétima arte pertinho de você. Confira os filmes em cartaz e garanta seu lugar!</p>
+            <a href="pages/sessoes.html" class="botao-destaque">Ver Programação</a>
+        </div>
+    </section>
+
+    <!-- FILMES EM CARTAZ -->
+    <main class="container">
+        <section class="secao-filmes">
+            <h2 class="titulo-secao">Filmes em Cartaz</h2>
+            
+            <div class="grid-filmes">
+                <!-- Card de Filme 1 -->
+                <article class="card-filme">
+                    <img src="imgs/poster-filme-1.jpg" alt="Pôster do Filme Aventura no Sertão" class="imagem-poster">
+                    <div class="conteudo-card">
+                        <h3>Aventura no Sertão</h3>
+                        <p class="genero">Ação / Aventura • 120 min</p>
+                        <p class="classificacao">Classificação: 12 anos</p>
+                        <a href="pages/sessoes.html" class="botao-primario">Ver Sessões</a>
+                    </div>
+                </article>
+
+                <!-- Card de Filme 2 -->
+                <article class="card-filme">
+                    <img src="imgs/poster-filme-2.jpg" alt="Pôster do Filme O Mistério da Serra" class="imagem-poster">
+                    <div class="conteudo-card">
+                        <h3>O Mistério da Serra</h3>
+                        <p class="genero">Suspense / Drama • 105 min</p>
+                        <p class="classificacao">Classificação: 14 anos</p>
+                        <a href="pages/sessoes.html" class="botao-primario">Ver Sessões</a>
+                    </div>
+                </article>
+            </div>
+        </section>
+    </main>
+
+    <!-- RODAPÉ -->
+    <footer class="rodape">
+        <p>&copy; 2026 CineSeridó - Todos os direitos reservados.</p>
+    </footer>
+
+</body>
+</html>

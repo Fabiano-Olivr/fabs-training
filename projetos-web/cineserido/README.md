@@ -53,7 +53,7 @@ cineserido/
 ├── js/
 │   └── script.js
 │
-├── imagens/
+├── imgs/
 │   ├── banner-home.jpg
 │   ├── poster-filme-1.jpg
 │   └── poster-filme-2.jpg

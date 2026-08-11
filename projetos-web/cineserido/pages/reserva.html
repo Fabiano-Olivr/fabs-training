@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CineSeridó - Reservar Assento</title>
+    <link rel="stylesheet" href="../css/estilo.css">
+</head>
+<body>
+
+    <!-- CABEÇALHO -->
+    <header class="cabecalho">
+        <div class="conteudo-cabecalho">
+            <h1 class="logo">CineSeridó</h1>
+            <nav class="navegacao">
+                <ul>
+                    <li><a href="../index.html">Home</a></li>
+                    <li><a href="sessoes.html">Sessões</a></li>
+                    <li><a href="gerenciamento.html">Gerenciamento</a></li>
+                    <li><a href="relatorio.html">Relatório</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <main class="container">
+        <section class="caixa-conteudo">
+            <h2 class="titulo-secao">Reserva de Ingresso</h2>
+            <div class="detalhes-sessao">
+                <p><strong>Filme:</strong> Aventura no Sertão | <strong>Sala:</strong> 1 | <strong>Horário:</strong> 19:30</p>
+            </div>
+
+            <!-- LEGENDA DOS ASSENTOS -->
+            <div class="legenda-assentos">
+                <div class="item-legenda"><span class="assento disponivel"></span> Disponível</div>
+                <div class="item-legenda"><span class="assento ocupado"></span> Ocupado</div>
+                <div class="item-legenda"><span class="assento selecionado"></span> Selecionado</div>
+            </div>
+
+            <!-- MAPA DA SALA DE CINEMA -->
+            <div class="painel-cinema">
+                <div class="tela-cinema">TELA</div>
+                
+                <div class="mapa-assentos" id="mapa-assentos">
+                    <!-- JS: Gerar botões de assentos dinamicamente -->
+                    <!-- Exemplo estático de assentos -->
+                    <div class="fileira-assentos">
+                        <span class="rotulo-fileira">A</span>
+                        <button class="assento disponivel">A1</button>
+                        <button class="assento disponivel">A2</button>
+                        <button class="assento ocupado" disabled>A3</button>
+                        <button class="assento disponivel">A4</button>
+                    </div>
+                    <div class="fileira-assentos">
+                        <span class="rotulo-fileira">B</span>
+                        <button class="assento disponivel">B1</button>
+                        <button class="assento selecionado">B2</button>
+                        <button class="assento selecionado">B3</button>
+                        <button class="assento disponivel">B4</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- FORMULÁRIO DE CONFIRMAÇÃO DE RESERVA -->
+            <form class="formulario-reserva" id="form-reserva">
+                <div class="grupo-campo">
+                    <label for="nome-cliente">Nome Completo do Cliente:</label>
+                    <input type="text" id="nome-cliente" placeholder="Digite seu nome" required>
+                </div>
+
+                <div class="resumo-reserva">
+                    <p>Assentos Selecionados: <strong id="texto-assentos">B2, B3</strong></p>
+                    <p>Valor Total: <strong id="texto-valor-total">R$ 60,00</strong></p>
+                </div>
+
+                <!-- JS: Ao enviar, cadastrar reserva e marcar assentos como ocupados -->
+                <button type="submit" class="botao-sucesso botao-largura-total">Confirmar Reserva</button>
+            </form>
+        </section>
+    </main>
+
+    <!-- RODAPÉ -->
+    <footer class="rodape">
+        <p>&copy; 2026 CineSeridó - Todos os direitos reservados.</p>
+    </footer>
+
+</body>
+</html>

@@ -6,11 +6,11 @@
 
 // REFERÊNCIAS AOS ELEMENTOS HTML
 const formulario_cadastro_filme = document.querySelector("#form-cadastro-filme");
-const nomeFilme = document.querySelector("#nome-filme");
-const duracaoFilme = document.querySelector("#duracao-filme");
-const generosFilme = document.getElementsByName("genero"); // retorna todos os elementos que possuem 'name="genero"'
-const classificacaoFilme = document.querySelector("#classificacao-filme");
-const bannerFilme = document.querySelector("#banner-filme");
+const inNomeFilmeCadastro = document.querySelector("#nome-filme-cadastro");
+const inDuracaoFilmeCadastro = document.querySelector("#duracao-filme-cadastro");
+const inGenerosFilmeCadastro = document.getElementsByName("genero-cadastro"); // retorna todos os elementos que possuem 'name="genero"'
+const inClassificacaoFilme = document.querySelector("#classificacao-filme-cadastro");
+const inBannerFilmeCadastro = document.querySelector("#banner-filme-cadastro");
 
 // VARIÁVEIS DE ESTADOS E CONSTANTES
 const BILHETERIA = {
@@ -19,39 +19,47 @@ const BILHETERIA = {
 }
 
 // FUNÇÕES AUXILIÁRES 
-
-// FUNÇÕES PRINCIPAIS
-function adicionarNovoFilme() {
-    const nome = nomeFilme.value.trim();
-    const duracao = duracaoFilme.value;
-    const generos = [...generosFilme.values()].filter(checkbox => checkbox.checked)
-        .map(checkbox => checkbox.value);
-    const classificacao = classificacaoFilme.value;
-    const banner = bannerFilme.files[0];
-
-    if (nome === "" || !isNaN(nome)) {
+function criarFilme(nomeFilme, duracaoFilme, generosFilme, classificacaoFilme, bannerFilme) {
+    if (nomeFilme === "" || !isNaN(nomeFilme)) {
         alert("Informe um Nome Válido!");
-        nomeFilme.value = "";
-        nomeFilme.focus();
+        inNomeFilmeCadastro.value = "";
+        inNomeFilmeCadastro.focus();
         return;
     }
-    if (generos.length === 0) {
+    if (generosFilme.length === 0) {
         alert("Selecione, pelo menos, um gênero");
         return;
     }
 
-    BILHETERIA.filmes.push({
-        nome: nome,
-        duracao: duracao,
-        generos: generos,
-        classificacao: classificacao,
-        banner: banner
-    });
+    return {
+        nome: nomeFilme,
+        duracao: duracaoFilme,
+        generos: generosFilme,
+        classificacao: classificacaoFilme,
+        banner: bannerFilme
+    }
+}
+
+// FUNÇÕES PRINCIPAIS
+function adicionarNovoFilme() {
+    const nome = inNomeFilmeCadastro.value.trim();
+    const duracao = inDuracaoFilmeCadastro.value;
+    const generos = [...inGenerosFilmeCadastro.values()].filter(checkbox => checkbox.checked)
+        .map(checkbox => checkbox.value);
+    const classificacao = inClassificacaoFilme.value;
+    const banner = inBannerFilmeCadastro.files[0];
+
+    const filme = criarFilme(nome, duracao, generos, classificacao, banner);
+    if (!filme) {
+        return;
+    }
+    BILHETERIA.filmes.push(filme);
+    
     formulario_cadastro_filme.reset();
 }
 
 // EVENTOS
 formulario_cadastro_filme.addEventListener("submit", function (e) {
-    event.preventDefault();
+    e.preventDefault();
     adicionarNovoFilme();
 })

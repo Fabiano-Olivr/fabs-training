@@ -32,7 +32,7 @@
             <!-- JS: Capturar o submit para adicionar nova sessão ao sistema -->
             <form id="form-cadastro-sessao" class="formulario-grid">
                 <div class="grupo-campo">
-                    <label for="nome-filme">Nome do Filme:</label>
+                    <label for="nome-filme-cadastro">Nome do Filme:</label>
                     <input type="text" id="nome-filme" required>
                 </div>
 
@@ -100,88 +100,88 @@
             <h2 class="titulo-secao">Adicionar Novo Filme ao Catálogo</h2>
             <form id="form-cadastro-filme" class="formulario-grid">
                 <div class="grupo-campo">
-                    <label for="nome-filme">Nome do Filme:</label>
-                    <input type="text" id="nome-filme" maxlength="50" required>
+                    <label for="nome-filme-cadastro">Nome do Filme:</label>
+                    <input type="text" id="nome-filme-cadastro" maxlength="50" required>
                 </div>
 
                 <div class="grupo-campo">
-                    <label for="duracao-filme">Duração (min):</label>
-                    <input type="number" id="duracao-filme" min="10" max="300" step="0.01" required>
+                    <label for="duracao-filme-cadastro">Duração (min):</label>
+                    <input type="number" id="duracao-filme-cadastro" min="10" max="300" step="0.01" required>
                 </div>
 
                 <div class="grupo-campo">
-                    <label for="generos-filme">Generos:</label>
-                    <section class="generos-filme">
+                    <label for="generos-filme-cadastro">Generos:</label>
+                    <section class="generos-filme-cadastro">
                         <label>
-                            <input type="checkbox" name="genero" value="acao">
+                            <input type="checkbox" name="genero-cadastro" value="acao">
                             <span>Ação</span>
                         </label>
 
                         <label>
-                            <input type="checkbox" name="genero" value="animacao">
+                            <input type="checkbox" name="genero-cadastro" value="animacao">
                             <span>Animação</span>
                         </label>
 
                         <label>
-                            <input type="checkbox" name="genero" value="aventura">
+                            <input type="checkbox" name="genero-cadastro" value="aventura">
                             <span>Aventura</span>
                         </label>
 
                         <label>
-                            <input type="checkbox" name="genero" value="comedia">
+                            <input type="checkbox" name="genero-cadastro" value="comedia">
                             <span>Comédia</span>
                         </label>
 
                         <label>
-                            <input type="checkbox" name="genero" value="documentario">
+                            <input type="checkbox" name="genero-cadastro" value="documentario">
                             <span>Documentário</span>
                         </label>
 
                         <label>
-                            <input type="checkbox" name="genero" value="drama">
+                            <input type="checkbox" name="genero-cadastro" value="drama">
                             <span>Drama</span>
                         </label>
 
                         <label>
-                            <input type="checkbox" name="genero" value="fantasia">
+                            <input type="checkbox" name="genero-cadastro" value="fantasia">
                             <span>Fantasia</span>
                         </label>
 
                         <label>
-                            <input type="checkbox" name="genero" value="faroeste">
+                            <input type="checkbox" name="genero-cadastro" value="faroeste">
                             <span>Faroeste</span>
                         </label>
 
                         <label>
-                            <input type="checkbox" name="genero" value="ficcao-cientifica">
+                            <input type="checkbox" name="genero-cadastro" value="ficcao-cientifica">
                             <span>Ficção Científica</span>
                         </label>
 
                         <label>
-                            <input type="checkbox" name="genero" value="romance">
+                            <input type="checkbox" name="genero-cadastro" value="romance">
                             <span>Romance</span>
                         </label>
 
                         <label>
-                            <input type="checkbox" name="genero" value="suspense">
+                            <input type="checkbox" name="genero-cadastro" value="suspense">
                             <span>Suspense</span>
                         </label>
 
                         <label>
-                            <input type="checkbox" name="genero" value="terror">
+                            <input type="checkbox" name="genero-cadastro" value="terror">
                             <span>Terror</span>
                         </label>
                     </section>
                 </div>
 
                 <div class="grupo-campo">
-                    <label for="classificacao-filme">Classificação Indicativa (anos):</label>
-                    <input type="number" id="classificacao-filme" min="0" step="1.00" required>
+                    <label for="classificacao-filme-cadastro">Classificação Indicativa (anos):</label>
+                    <input type="number" id="classificacao-filme-cadastro" min="0" step="1.00" required>
                 </div>
 
                 <div class="grupo-campo">
-                    <label for="banner-filme">Banner:</label>
-                    <input type="file" id="banner-filme" name="banner" accept="image/*" required>
+                    <label for="banner-filme-cadastro">Banner:</label>
+                    <input type="file" id="banner-filme-cadastro" name="banner" accept="image/*" required>
                 </div>
 
                 <button type="submit" class="botao-primario">Cadastrar Filme</button>

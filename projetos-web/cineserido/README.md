@@ -61,6 +61,12 @@ cineserido/
 └── icones/
 ```
 
+## 🧩 Fluxo de Dados
+*! Para melhor Visualização do fluxograma, desabilite a quebra de linha*
+<pre style="white-space: pre; overflow-x: auto; font-family: monospace;">
+
+</pre>
+
 ## 📝 Feedback da IA
 
 > 

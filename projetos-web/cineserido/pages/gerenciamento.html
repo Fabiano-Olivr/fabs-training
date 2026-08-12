@@ -1,11 +1,13 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>CineSeridó - Gerenciamento</title>
     <link rel="stylesheet" href="../css/estilo.css">
 </head>
+
 <body>
 
     <!-- CABEÇALHO -->
@@ -92,6 +94,128 @@
                 </table>
             </div>
         </section>
+
+        <!-- CADASTRO DE FILMES -->
+        <section class="caixa-conteudo">
+            <h2 class="titulo-secao">Adicionar Novo Filme ao Catálogo</h2>
+            <form id="form-cadastro-filme" class="formulario-grid">
+                <div class="grupo-campo">
+                    <label for="nome-filme">Nome do Filme:</label>
+                    <input type="text" id="nome-filme" maxlength="50" required>
+                </div>
+
+                <div class="grupo-campo">
+                    <label for="duracao-filme">Duração (min):</label>
+                    <input type="number" id="duracao-filme" min="10" max="300" step="0.01" required>
+                </div>
+
+                <div class="grupo-campo">
+                    <label for="generos-filme">Generos:</label>
+                    <section class="generos-filme">
+                        <label>
+                            <input type="checkbox" name="genero" value="acao">
+                            <span>Ação</span>
+                        </label>
+
+                        <label>
+                            <input type="checkbox" name="genero" value="animacao">
+                            <span>Animação</span>
+                        </label>
+
+                        <label>
+                            <input type="checkbox" name="genero" value="aventura">
+                            <span>Aventura</span>
+                        </label>
+
+                        <label>
+                            <input type="checkbox" name="genero" value="comedia">
+                            <span>Comédia</span>
+                        </label>
+
+                        <label>
+                            <input type="checkbox" name="genero" value="documentario">
+                            <span>Documentário</span>
+                        </label>
+
+                        <label>
+                            <input type="checkbox" name="genero" value="drama">
+                            <span>Drama</span>
+                        </label>
+
+                        <label>
+                            <input type="checkbox" name="genero" value="fantasia">
+                            <span>Fantasia</span>
+                        </label>
+
+                        <label>
+                            <input type="checkbox" name="genero" value="faroeste">
+                            <span>Faroeste</span>
+                        </label>
+
+                        <label>
+                            <input type="checkbox" name="genero" value="ficcao-cientifica">
+                            <span>Ficção Científica</span>
+                        </label>
+
+                        <label>
+                            <input type="checkbox" name="genero" value="romance">
+                            <span>Romance</span>
+                        </label>
+
+                        <label>
+                            <input type="checkbox" name="genero" value="suspense">
+                            <span>Suspense</span>
+                        </label>
+
+                        <label>
+                            <input type="checkbox" name="genero" value="terror">
+                            <span>Terror</span>
+                        </label>
+                    </section>
+                </div>
+
+                <div class="grupo-campo">
+                    <label for="classificacao-filme">Classificação Indicativa (anos):</label>
+                    <input type="number" id="classificacao-filme" min="0" step="1.00" required>
+                </div>
+
+                <div class="grupo-campo">
+                    <label for="banner-filme">Banner:</label>
+                    <input type="file" id="banner-filme" name="banner" accept="image/*" required>
+                </div>
+
+                <button type="submit" class="botao-primario">Cadastrar Filme</button>
+            </form>
+        </section>
+
+        <!-- LISTA DE FILMES PARA REMOVER DO CATÁLOG -->
+        <section class="caixa-conteudo">
+            <h2 class="titulo-secao">Filmes em Catalogo (Remoção)</h2>
+            <div class="tabela-container">
+                <table class="tabela-padrao">
+                    <thead>
+                        <tr>
+                            <th>Filme</th>
+                            <th>Duração</th>
+                            <th>Gêneros</th>
+                            <th>Clasfic. Indicativa</th>
+                        </tr>
+                    </thead>
+                    <tbody id="tabela-reservas">
+                        <!-- JS: Renderizar lista de reservas aqui -->
+                        <!-- Exemplo estático -->
+                        <tr>
+                            <td>1001 Linhas de Código por Xícara de Café</td>
+                            <td>118 min</td>
+                            <td>Suspense / Drama / Superação</td>
+                            <td>14 Anos</td>
+                            <!-- JS: Ação de cancelamento deve devolver assentos e desativar reserva -->
+                            <td><button class="botao-perigo">Remover</button></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </section>
     </main>
 
     <!-- RODAPÉ -->
@@ -99,5 +223,8 @@
         <p>&copy; 2026 CineSeridó - Todos os direitos reservados.</p>
     </footer>
 
+    <script src="../js/script.js"></script>
+
 </body>
+
 </html>

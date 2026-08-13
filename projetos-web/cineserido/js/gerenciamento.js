@@ -16,7 +16,7 @@ const outGenerosFilmeCadastro = document.querySelector("#generos-filme-cadastro"
 // VARIÁVEIS DE ESTADOS E CONSTANTES
 const BILHETERIA = {
     filmes: [],
-    secoes: [],
+    secoes: []
 }
 
 // INICIALIZAÇÃO
@@ -77,7 +77,7 @@ function adicionarNovoFilme() {
         return;
     }
     BILHETERIA.filmes.push(filme);
-    
+
     formulario_cadastro_filme.reset();
 }
 

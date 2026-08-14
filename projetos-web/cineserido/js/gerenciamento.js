@@ -5,7 +5,7 @@
  */
 
 // IMPORTS DE MÓDULOS E DEPENDÊNCIAS
-import { salvarDados, recuperarDados } from "./storage.js";
+import { salvarDados, recuperarDados, removerDados } from "./storage.js";
 
 // REFERÊNCIAS AOS ELEMENTOS HTML
 const formulario_cadastro_filme = document.querySelector("#form-cadastro-filme");
@@ -46,7 +46,7 @@ function renderizarTabelaRemocao(catalogo) {
                 <td>${filme.duracao} min</td>
                 <td>${filme.generos.join(" / ")}</td>
                 <td>${filme.classificacao} Anos</td>
-                <td><button class="botao-perigo">🗑</button></td>
+                <td><button class="botao-perigo" id="${filme.id.replace("filme-","btn-")}" title="Remover do Catalogo">🗑</button></td>
             `;
     
             outTabelaRemocao.appendChild(linhaFilme);
@@ -105,8 +105,21 @@ function adicionarNovoFilme() {
     formulario_cadastro_filme.reset();
 }
 
+function removerFilmeCatalogo(idFilme) {
+    const id = idFilme.replace("btn-", "filme-");
+    removerDados("filmes", id);
+    renderizarTabelaRemocao(recuperarDados("filmes"));
+}
+
 // EVENTOS
 formulario_cadastro_filme.addEventListener("submit", function (e) {
     e.preventDefault();
     adicionarNovoFilme();
 });
+
+// Ouvinte dos botões da tabela de remover do catálogo
+outTabelaRemocao.addEventListener("click", function (e) {
+    if (e.target.classList.contains("botao-perigo")) {
+        removerFilmeCatalogo(e.target.id);
+    }
+})

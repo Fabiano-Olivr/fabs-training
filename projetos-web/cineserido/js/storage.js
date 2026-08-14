@@ -14,13 +14,15 @@ function converterParaUpload(objeto) {
 }
 
 // FUNÇÕES PRINCIPAIS
-export function salvarDados(dados) {
-    let filmes = converterDownload(localStorage.get("filmes"));
+export function salvarDados(chave, dados) {
+    let filmes = converterDownload(localStorage.getItem("filmes"));
     if (filmes) {
         filmes.push(converterParaUpload(dados));
     } else {
         filmes = [converterParaUpload(dados)];
     }
+
+    localStorage.setItem(chave, converterParaUpload(filmes));
 }
 
 export function recuperarDados(chave) {

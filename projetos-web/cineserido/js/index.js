@@ -2,14 +2,20 @@
  * esse script é responsável pela manipulação dos filmes na página home.
  * 
  * autor: Fabiano O.
- */
+*/
+
+// IMPORTS DE MÓDULOS E DEPENDÊNCIAS
+import { recuperarDados } from "./storage.js"; 
 
 // REFERÊNCIA AOS ELEMENTOS HTML
 const conteinerFilmes = document.querySelector("#conteiner-filmes");
 
 // FUNÇÕES PRINCIPAIS
-function atualizarCatalogo(listaFilmes) {
+function atualizarCatalogo() {
+    const listaFilmes = recuperarDados("filmes");
+
     conteinerFilmes.innerHTML = "";
+    conteinerFilmes.className = "grid-filmes";
 
     if (listaFilmes) {
         listaFilmes.forEach(filme => {

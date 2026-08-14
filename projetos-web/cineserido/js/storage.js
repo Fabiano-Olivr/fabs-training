@@ -28,3 +28,12 @@ export function salvarDados(chave, dados) {
 export function recuperarDados(chave) {
     return converterDownload(localStorage.getItem(chave));
 }
+
+export function removerDados(chave, idFilme) {
+    const filmes = converterDownload(localStorage.getItem("filmes"));
+    if (filmes) {
+        const index = filmes.findIndex(filme => filme.id === idFilme);
+        filmes.splice(index, 1);
+    }
+    localStorage.setItem(chave, converterParaUpload(filmes));
+}

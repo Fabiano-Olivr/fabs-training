@@ -15,6 +15,7 @@ const inGenerosFilmeCadastro = document.getElementsByName("genero-cadastro"); //
 const inClassificacaoFilme = document.querySelector("#classificacao-filme-cadastro");
 const inBannerFilmeCadastro = document.querySelector("#banner-filme-cadastro");
 const outGenerosFilmeCadastro = document.querySelector("#generos-filme-cadastro");
+const outTabelaRemocao = document.querySelector("#tabela-remocao");
 
 // INICIALIZAÇÃO
 inicializarEventos();
@@ -32,6 +33,30 @@ function renderizarGeneros() {
         `;
         outGenerosFilmeCadastro.appendChild(novoGenero);
     });
+}
+
+function renderizarTabelaRemocao(catalogo) {
+    outTabelaRemocao.innerHTML = "";
+
+    if (catalogo) {
+        catalogo.forEach(filme => {
+            const linhaFilme = document.createElement("tr");
+            linhaFilme.innerHTML = `
+                <td>${filme.nome}</td>
+                <td>${filme.duracao} min</td>
+                <td>${filme.generos.join(" / ")}</td>
+                <td>${filme.classificacao} Anos</td>
+                <td><button class="botao-perigo">🗑</button></td>
+            `;
+    
+            outTabelaRemocao.appendChild(linhaFilme);
+        });
+    } else {
+        outTabelaRemocao.innerHTML = `
+            <p>Não há filmes em Catálogo</p>
+        `;
+    }
+
 }
 
 function criarFilme(nomeFilme, duracaoFilme, generosFilme, classificacaoFilme, bannerFilme) {
@@ -59,6 +84,7 @@ function criarFilme(nomeFilme, duracaoFilme, generosFilme, classificacaoFilme, b
 // FUNÇÕES PRINCIPAIS
 function inicializarEventos() {
     renderizarGeneros();
+    renderizarTabelaRemocao(recuperarDados("filmes"));
 }
 
 function adicionarNovoFilme() {
@@ -74,6 +100,7 @@ function adicionarNovoFilme() {
         return;
     }
     salvarDados("filmes", filme);
+    renderizarTabelaRemocao(recuperarDados("filmes"));
 
     formulario_cadastro_filme.reset();
 }

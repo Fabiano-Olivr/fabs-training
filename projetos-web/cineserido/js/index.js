@@ -15,17 +15,17 @@ function atualizarCatalogo() {
     const listaFilmes = recuperarDados("filmes");
 
     conteinerFilmes.innerHTML = "";
-    conteinerFilmes.className = "grid-filmes";
 
     if (listaFilmes) {
         listaFilmes.forEach(filme => {
             const novoFilme = document.createElement("article");
-            const urlBanner = URL.createObjectURL(filme.banner); // cria uma url temporária para a imagem no vetor  
+            novoFilme.className = "card-filme";
+
             novoFilme.innerHTML = `
-                <img src="${urlBanner}" alt="Pôster do ${filme.nome}" class="imagem-poster">
+                <img src="${filme.urlBanner}" alt="Pôster do ${filme.nome}" class="imagem-poster">
                 <div class="conteudo-card">
                     <h3>${filme.nome}</h3>
-                    <p class="genero">${filme.genero.join(" / ")} • ${filme.duracao} min</p>
+                    <p class="genero">${filme.generos.join(" / ")} • ${filme.duracao} min</p>
                     <p class="classificacao">Classificação: ${filme.classificacao} anos</p>
                     <a href="pages/sessoes.html" class="botao-primario">Ver Sessões</a>
                 </div>

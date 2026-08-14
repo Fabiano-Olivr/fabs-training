@@ -17,9 +17,9 @@ function converterParaUpload(objeto) {
 export function salvarDados(chave, dados) {
     let filmes = converterDownload(localStorage.getItem("filmes"));
     if (filmes) {
-        filmes.push(converterParaUpload(dados));
+        filmes.push(dados);
     } else {
-        filmes = [converterParaUpload(dados)];
+        filmes = [dados];
     }
 
     localStorage.setItem(chave, converterParaUpload(filmes));

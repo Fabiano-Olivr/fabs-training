@@ -4,6 +4,9 @@
  * autor: Fabiano O.
  */
 
+// IMPORTS DE MÓDULOS E DEPENDÊNCIAS
+import { salvarDados, recuperarDados } from "./storage.js";
+
 // REFERÊNCIAS AOS ELEMENTOS HTML
 const formulario_cadastro_filme = document.querySelector("#form-cadastro-filme");
 const inNomeFilmeCadastro = document.querySelector("#nome-filme-cadastro");
@@ -12,12 +15,6 @@ const inGenerosFilmeCadastro = document.getElementsByName("genero-cadastro"); //
 const inClassificacaoFilme = document.querySelector("#classificacao-filme-cadastro");
 const inBannerFilmeCadastro = document.querySelector("#banner-filme-cadastro");
 const outGenerosFilmeCadastro = document.querySelector("#generos-filme-cadastro");
-
-// VARIÁVEIS DE ESTADOS E CONSTANTES
-const BILHETERIA = {
-    filmes: [],
-    secoes: []
-}
 
 // INICIALIZAÇÃO
 inicializarEventos();
@@ -55,7 +52,7 @@ function criarFilme(nomeFilme, duracaoFilme, generosFilme, classificacaoFilme, b
         duracao: duracaoFilme,
         generos: generosFilme,
         classificacao: classificacaoFilme,
-        banner: bannerFilme
+        urlBanner: bannerFilme
     }
 }
 
@@ -70,13 +67,13 @@ function adicionarNovoFilme() {
     const generos = [...inGenerosFilmeCadastro.values()].filter(checkbox => checkbox.checked)
         .map(checkbox => checkbox.value);
     const classificacao = inClassificacaoFilme.value;
-    const banner = inBannerFilmeCadastro.files[0];
+    const urlBanner = URL.createObjectURL(inBannerFilmeCadastro.files[0]); // cria uma url temporária para a imagem no vetor  
 
-    const filme = criarFilme(nome, duracao, generos, classificacao, banner);
+    const filme = criarFilme(nome, duracao, generos, classificacao, urlBanner);
     if (!filme) {
         return;
     }
-    BILHETERIA.filmes.push(filme);
+    salvarDados("filmes", filme);
 
     formulario_cadastro_filme.reset();
 }

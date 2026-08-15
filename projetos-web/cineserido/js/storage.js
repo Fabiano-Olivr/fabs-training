@@ -14,26 +14,30 @@ function converterParaUpload(objeto) {
 }
 
 // FUNÇÕES PRINCIPAIS
-export function salvarDados(chave, dados) {
-    let filmes = converterDownload(localStorage.getItem("filmes"));
-    if (filmes) {
-        filmes.push(dados);
+export function salvarDados(chave, dadosParaSalvar) {
+    let dadosStorage = converterDownload(localStorage.getItem(chave));
+    if (dadosStorage) {
+        dadosStorage.push(dadosParaSalvar);
     } else {
-        filmes = [dados];
+        dadosStorage = [dadosParaSalvar];
     }
 
-    localStorage.setItem(chave, converterParaUpload(filmes));
+    localStorage.setItem(chave, converterParaUpload(dadosStorage));
 }
 
 export function recuperarDados(chave) {
     return converterDownload(localStorage.getItem(chave));
 }
 
-export function removerDados(chave, idFilme) {
-    const filmes = converterDownload(localStorage.getItem("filmes"));
-    if (filmes) {
-        const index = filmes.findIndex(filme => filme.id === idFilme);
-        filmes.splice(index, 1);
+export function removerDados(chave, idDado) {
+    const dados = converterDownload(localStorage.getItem("filmes"));
+    if (dados) {
+        const index = dados.findIndex(dado => dado.id === idDado);
+        dados.splice(index, 1);
     }
-    localStorage.setItem(chave, converterParaUpload(filmes));
+    if (dados.length === 0) {
+        localStorage.removeItem(chave);
+    } else {
+        localStorage.setItem(chave, converterParaUpload(dados));
+    }
 }

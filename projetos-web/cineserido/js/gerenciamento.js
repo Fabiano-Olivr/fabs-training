@@ -16,6 +16,14 @@ const inClassificacaoFilme = document.querySelector("#classificacao-filme-cadast
 const inBannerFilmeCadastro = document.querySelector("#banner-filme-cadastro");
 const outGenerosFilmeCadastro = document.querySelector("#generos-filme-cadastro");
 const outTabelaRemocao = document.querySelector("#tabela-remocao");
+const formulario_cadastro_secao = document.querySelector("#form-cadastro-sessao");
+const outInOptionsFilme = document.querySelector("#select-filme-secao");
+const inNumSalaSecao = document.querySelector("#numero-sala-secao");
+const inDataSecao = document.querySelector("#data-sessao");
+const inHorarioSessao = document.querySelector("#horario-sessao");
+const inCapacidadeSalaSecao = document.querySelector("#capacidade-sala-secao");
+const inPrecoIngressoSecao = document.querySelector("#preco-ingresso-secao");
+
 
 // INICIALIZAÇÃO
 inicializarEventos();
@@ -46,9 +54,9 @@ function renderizarTabelaRemocao(catalogo) {
                 <td>${filme.duracao} min</td>
                 <td>${filme.generos.join(" / ")}</td>
                 <td>${filme.classificacao} Anos</td>
-                <td><button class="botao-perigo" id="${filme.id.replace("filme-","btn-")}" title="Remover do Catalogo">🗑</button></td>
+                <td><button class="botao-perigo" id="${filme.id.replace("filme-", "btn-")}" title="Remover do Catalogo">🗑</button></td>
             `;
-    
+
             outTabelaRemocao.appendChild(linhaFilme);
         });
     } else {
@@ -57,6 +65,26 @@ function renderizarTabelaRemocao(catalogo) {
         `;
     }
 
+}
+
+function renderizarOptionsFilmes(catalogo) {
+    outInOptionsFilme.innerHTML = `
+        <option value="" selected disabled>Selecione...</option>
+    `;
+
+    if (catalogo) {
+        catalogo.forEach(filme => {
+            const optionFilme = document.createElement("option");
+            optionFilme.value = filme.id;
+            optionFilme.text = filme.nome;
+            outInOptionsFilme.appendChild(optionFilme)
+        });
+    }
+}
+
+function atualizarUI(filmes) {
+    renderizarTabelaRemocao(filmes);
+    renderizarOptionsFilmes(filmes);
 }
 
 function criarFilme(nomeFilme, duracaoFilme, generosFilme, classificacaoFilme, bannerFilme) {
@@ -84,7 +112,9 @@ function criarFilme(nomeFilme, duracaoFilme, generosFilme, classificacaoFilme, b
 // FUNÇÕES PRINCIPAIS
 function inicializarEventos() {
     renderizarGeneros();
-    renderizarTabelaRemocao(recuperarDados("filmes"));
+
+    const dados = recuperarDados("filmes");
+    atualizarUI(dados);
 }
 
 function adicionarNovoFilme() {
@@ -100,7 +130,7 @@ function adicionarNovoFilme() {
         return;
     }
     salvarDados("filmes", filme);
-    renderizarTabelaRemocao(recuperarDados("filmes"));
+    atualizarUI(recuperarDados("filmes"));
 
     formulario_cadastro_filme.reset();
 }
@@ -108,7 +138,66 @@ function adicionarNovoFilme() {
 function removerFilmeCatalogo(idFilme) {
     const id = idFilme.replace("btn-", "filme-");
     removerDados("filmes", id);
-    renderizarTabelaRemocao(recuperarDados("filmes"));
+    atualizarUI(recuperarDados("filmes"));
+}
+
+function adicionarNovaSecao() {
+    const idFilme = outInOptionsFilme.value;
+    const dataSecao = inDataSecao.value;
+    const horaSecao = inHorarioSessao.value;
+    const salaSecao = inNumSalaSecao.value;
+    const capacidadeSala = inCapacidadeSalaSecao.value;
+    const precoIngresso = inPrecoIngressoSecao.value;
+    
+    const filme = recuperarDados("filmes").find(filme => filme.id === idFilme);
+    const dataHoraNovaSecao = new Date(`${dataSecao}T${horaSecao}:00-03:00`);
+
+    if (dataHoraNovaSecao < new Date()) {
+        alert("Não é possível agendar uma seção no Passado. Rever a data e Hora!");
+        inDataSecao.value = "";
+        inHorarioSessao.value = "";
+        inDataSecao.focus();
+        return;
+    }
+
+    const novaSecao = {
+        idSecao: "secao-" + crypto.randomUUID().slice(0, 4),
+        filme: filme,
+        sala: salaSecao,
+        data: dataSecao,
+        horario: horaSecao,
+        capacidadeSala: capacidadeSala,
+        precoIngresso: precoIngresso
+    };
+
+    const secoes = recuperarDados("secoes");
+    if (secoes) {
+        const salaOcupada = secoes.some(secao => {
+            if (novaSecao.sala === secao.sala) {
+                const dataHoraSecaoReserva = new Date(`${secao.data}T${secao.horario}:00-03:00`);
+                const fimSecaoReserva = new Date(dataHoraSecaoReserva.getTime());
+                fimSecaoReserva.setMinutes(fimSecaoReserva.getMinutes() + Number(secao.filme.duracao));
+                
+                if (dataHoraNovaSecao >= dataHoraSecaoReserva && dataHoraNovaSecao <= fimSecaoReserva) {
+                    return true;
+                } else if (dataHoraNovaSecao < dataHoraSecaoReserva) {
+                    const fimNovaSecao = new Date(dataHoraNovaSecao.getTime());
+                    fimNovaSecao.setMinutes(fimNovaSecao.getMinutes() + Number(novaSecao.filme.duracao));
+                    return fimNovaSecao >= dataHoraSecaoReserva;
+                }
+            }
+        });
+
+        if (salaOcupada) {
+            alert(`A sala ${salaSecao} já está reservada nesse horário! Selecione outra sala ou outro horário.`);
+            return;
+        } else {
+            salvarDados("secoes", novaSecao);
+        }
+    } else {
+        salvarDados("secoes", novaSecao);
+    }
+    formulario_cadastro_secao.reset();
 }
 
 // EVENTOS
@@ -122,4 +211,9 @@ outTabelaRemocao.addEventListener("click", function (e) {
     if (e.target.classList.contains("botao-perigo")) {
         removerFilmeCatalogo(e.target.id);
     }
-})
+});
+
+formulario_cadastro_secao.addEventListener("submit", function (e) {
+    e.preventDefault();
+    adicionarNovaSecao();
+});

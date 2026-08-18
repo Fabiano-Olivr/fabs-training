@@ -142,17 +142,17 @@ function removerFilmeCatalogo(idFilme) {
 }
 
 function adicionarNovaSecao() {
-    const idFilme = outInOptionsFilme.value;
-    const dataSecao = inDataSecao.value;
-    const horaSecao = inHorarioSessao.value;
-    const salaSecao = inNumSalaSecao.value;
+    const idFilmeSelecionado = outInOptionsFilme.value;
+    const dataNovaSecao = inDataSecao.value;
+    const horaNovaSecao = inHorarioSessao.value;
+    const salaNovaSecao = inNumSalaSecao.value;
     const capacidadeSala = inCapacidadeSalaSecao.value;
-    const precoIngresso = inPrecoIngressoSecao.value;
+    const precoIngressoSecao = inPrecoIngressoSecao.value;
     
-    const filme = recuperarDados("filmes").find(filme => filme.id === idFilme);
-    const dataHoraNovaSecao = new Date(`${dataSecao}T${horaSecao}:00-03:00`);
+    const filmeNovaSecao = recuperarDados("filmes").find(filme => filme.id === idFilmeSelecionado);
+    const inicioNovaSecao = new Date(`${dataNovaSecao}T${horaNovaSecao}:00-03:00`);
 
-    if (dataHoraNovaSecao < new Date()) {
+    if (inicioNovaSecao < new Date()) {
         alert("Não é possível agendar uma seção no Passado. Rever a data e Hora!");
         inDataSecao.value = "";
         inHorarioSessao.value = "";
@@ -162,34 +162,34 @@ function adicionarNovaSecao() {
 
     const novaSecao = {
         idSecao: "secao-" + crypto.randomUUID().slice(0, 4),
-        filme: filme,
-        sala: salaSecao,
-        data: dataSecao,
-        horario: horaSecao,
+        filme: filmeNovaSecao,
+        sala: salaNovaSecao,
+        data: dataNovaSecao,
+        horario: horaNovaSecao,
         capacidadeSala: capacidadeSala,
-        precoIngresso: precoIngresso
+        precoIngresso: precoIngressoSecao
     };
 
-    const secoes = recuperarDados("secoes");
-    if (secoes) {
-        const salaOcupada = secoes.some(secao => {
+    const secoesCadastradas = recuperarDados("secoes");
+    if (secoesCadastradas) {
+        const salaOcupada = secoesCadastradas.some(secao => {
             if (novaSecao.sala === secao.sala) {
-                const dataHoraSecaoReserva = new Date(`${secao.data}T${secao.horario}:00-03:00`);
-                const fimSecaoReserva = new Date(dataHoraSecaoReserva.getTime());
-                fimSecaoReserva.setMinutes(fimSecaoReserva.getMinutes() + Number(secao.filme.duracao));
+                const inicioSecaoCadastrada = new Date(`${secao.data}T${secao.horario}:00-03:00`);
+                const fimSecaoCadastrada = new Date(inicioSecaoCadastrada.getTime());
+                fimSecaoCadastrada.setMinutes(fimSecaoCadastrada.getMinutes() + Number(secao.filme.duracao));
                 
-                if (dataHoraNovaSecao >= dataHoraSecaoReserva && dataHoraNovaSecao <= fimSecaoReserva) {
+                if (inicioNovaSecao >= inicioSecaoCadastrada && inicioNovaSecao <= fimSecaoCadastrada) {
                     return true;
-                } else if (dataHoraNovaSecao < dataHoraSecaoReserva) {
-                    const fimNovaSecao = new Date(dataHoraNovaSecao.getTime());
+                } else if (inicioNovaSecao < inicioSecaoCadastrada) {
+                    const fimNovaSecao = new Date(inicioNovaSecao.getTime());
                     fimNovaSecao.setMinutes(fimNovaSecao.getMinutes() + Number(novaSecao.filme.duracao));
-                    return fimNovaSecao >= dataHoraSecaoReserva;
+                    return fimNovaSecao >= inicioSecaoCadastrada;
                 }
             }
         });
 
         if (salaOcupada) {
-            alert(`A sala ${salaSecao} já está reservada nesse horário! Selecione outra sala ou outro horário.`);
+            alert(`A sala ${salaNovaSecao} já está reservada nesse horário! Selecione outra sala ou outro horário.`);
             return;
         } else {
             salvarDados("secoes", novaSecao);

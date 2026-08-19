@@ -24,10 +24,6 @@ const inHorarioSessao = document.querySelector("#horario-sessao");
 const inCapacidadeSalaSecao = document.querySelector("#capacidade-sala-secao");
 const inPrecoIngressoSecao = document.querySelector("#preco-ingresso-secao");
 
-
-// INICIALIZAÇÃO
-inicializarEventos();
-
 // UTILITÁRIOS
 function obterIntervaloDasSecoes(dataHoraInicio, duracaoFilme) {
     const inicioSecao = new Date(dataHoraInicio);
@@ -235,3 +231,6 @@ formulario_cadastro_secao.addEventListener("submit", function (e) {
     e.preventDefault();
     adicionarNovaSecao();
 });
+
+// INICIALIZAÇÃO
+inicializarEventos();

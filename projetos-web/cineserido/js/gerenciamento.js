@@ -149,7 +149,7 @@ function adicionarNovaSecao() {
     const idFilmeSelecionado = outInOptionsFilme.value;
     const dataNovaSecao = inDataSecao.value;
     const horaNovaSecao = inHorarioSessao.value;
-    const salaNovaSecao = inNumSalaSecao.value;
+    const salaNovaSecao = Number(inNumSalaSecao.value);
     const capacidadeSala = inCapacidadeSalaSecao.value;
     const precoIngressoSecao = inPrecoIngressoSecao.value;
 
@@ -180,7 +180,7 @@ function adicionarNovaSecao() {
 
         // Verifica se, pelo menos uma seção existente, bate com o horário da nova seção
         const salaOcupada = secoesCadastradas.some(secao => {
-            if (Number(novaSecao.sala) === Number(secao.sala)) {
+            if (novaSecao.sala === Number(secao.sala)) {
                 const [inicioSecaoCadastrada, fimSecaoCadastrada] = obterIntervaloDasSecoes(`${secao.data}T${secao.horario}:00`, secao.filme.duracao);
 
                 if (inicioNovaSecao >= inicioSecaoCadastrada && inicioNovaSecao <= fimSecaoCadastrada) {

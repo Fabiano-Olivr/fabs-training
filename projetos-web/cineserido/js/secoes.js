@@ -16,12 +16,23 @@ const inComVagas = document.querySelector("#filtro-disponivel");
 const conteinerSessoes = document.querySelector("#conteiner-sessoes");
 
 // FUNÇÕES AUXILIÁRES
-
+function renderizarOpcoesDeSalas(listaSecoes) {
+    inOutSelectSala.innerHTML = `
+        <option value="">Todas as salas</option>
+    `;
+    listaSecoes.forEach(secao => {
+        const opcaoSala = document.createElement("option");
+        opcaoSala.value = secao.sala;
+        opcaoSala.text = `Sala ${secao.sala}`;
+        inOutSelectSala.appendChild(opcaoSala);
+    });
+}
 
 // FUNÇÕES PRINCIPAIS
 function inicializarEventos() {
     const secoes = recuperarDados("secoes");
     renderizarSecoes(secoes);
+    renderizarOpcoesDeSalas(secoes);
 }
 
 function renderizarSecoes(listaSecoes) {

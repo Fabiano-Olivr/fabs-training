@@ -27,7 +27,7 @@
         <!-- ÁREA DE FILTROS -->
         <section class="caixa-conteudo">
             <h2 class="titulo-secao">Buscar Sessões</h2>
-            <form class="formulario-filtro">
+            <form id="formulario-filtro-secoes" class="formulario-filtro">
                 <div class="grupo-campo">
                     <label for="filtro-filme">Filme:</label>
                     <input type="text" id="filtro-filme" placeholder="Digite o nome do filme">
@@ -64,17 +64,7 @@
             
             <div class="grid-sessoes" id="conteiner-sessoes">
                 <!-- JS: As sessões serão renderizadas dinamicamente aqui -->
-                
-                <!-- Exemplo de Card Estático (para referência visual) -->
-                <article class="card-sessao">
-                    <h3>Aventura no Sertão</h3>
-                    <p><strong>Sala:</strong> Sala 1</p>
-                    <p><strong>Data:</strong> 15/10/2026</p>
-                    <p><strong>Horário:</strong> 19:30</p>
-                    <p><strong>Vagas:</strong> 25/50</p>
-                    <a href="reserva.html" class="botao-sucesso">Reservar Assento</a>
-                </article>
-            </div>
+                </div>
         </section>
     </main>
 
@@ -83,5 +73,6 @@
         <p>&copy; 2026 CineSeridó - Todos os direitos reservados.</p>
     </footer>
 
+    <script type="module" src="../js/secoes.js"></script>
 </body>
 </html>

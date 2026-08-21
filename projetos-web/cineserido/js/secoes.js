@@ -5,7 +5,7 @@
  */
 
 // IMPORTS DE MÓDULOS E DEPENDÊNCIAS
-import { recuperarDados } from "./storage.js";
+import { recuperarDados, salvarDados } from "./storage.js";
 
 // REFERÊNCIAS AOS ELEMENTOS HTML
 const formularioFiltroSecoes = document.querySelector("#formulario-filtro-secoes");
@@ -61,7 +61,7 @@ function renderizarSecoes(listaSecoes) {
                 <p><strong>Data:</strong> ${data}</p>
                 <p><strong>Horário:</strong> ${secao.horario}</p>
                 <p><strong>Vagas:</strong> 25/50</p>
-                <a href="reserva.html" class="botao-sucesso">Reservar Assento</a>
+                <a href="reserva.html" class="botao-sucesso" data-secao-id="${secao.idSecao}">Reservar Assento</a>
             `;
 
             conteinerSessoes.appendChild(cartaoSecao);
@@ -100,6 +100,13 @@ function filtrarSecoes(listaSecoes, callback) {
 formularioFiltroSecoes.addEventListener("submit", function (e) {
     e.preventDefault();
     filtrarSecoes(recuperarDados("secoes"), renderizarSecoes);
+});
+
+conteinerSessoes.addEventListener("click", function (e) {
+    if (e.target.classList.contains("botao-sucesso")) {
+        const idSecao = e.target.dataset.secaoId; // obtém o id da seção atribuido ao elemento <a> do botão clicado
+        salvarDados("secaoIdTemp", idSecao);
+    }
 });
 
 // INICIALIZAÇÃO

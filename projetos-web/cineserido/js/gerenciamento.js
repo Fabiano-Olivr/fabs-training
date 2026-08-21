@@ -171,7 +171,8 @@ function adicionarNovaSecao() {
         data: dataNovaSecao,
         horario: horaNovaSecao,
         capacidadeSala: capacidadeSala,
-        precoIngresso: precoIngressoSecao
+        precoIngresso: precoIngressoSecao,
+        ingressosVendidos: []
     };
 
     const secoesCadastradas = recuperarDados("secoes");

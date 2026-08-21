@@ -20,11 +20,17 @@ function renderizarOpcoesDeSalas(listaSecoes) {
     inOutSelectSala.innerHTML = `
         <option value="">Todas as salas</option>
     `;
+
+    const salasCriadas = new Set(); // Usado como lista de controle para não repetir os nºs das salas
     listaSecoes.forEach(secao => {
-        const opcaoSala = document.createElement("option");
-        opcaoSala.value = secao.sala;
-        opcaoSala.text = `Sala ${secao.sala}`;
-        inOutSelectSala.appendChild(opcaoSala);
+        if (!salasCriadas.has(secao.sala)) {  // A sala já existe ? Se retornar false:
+            const opcaoSala = document.createElement("option");
+            opcaoSala.value = secao.sala;
+            opcaoSala.text = `Sala ${secao.sala}`;
+            inOutSelectSala.appendChild(opcaoSala);
+
+            salasCriadas.add(secao.sala);
+        }
     });
 }
 

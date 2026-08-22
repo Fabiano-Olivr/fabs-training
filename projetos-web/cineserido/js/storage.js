@@ -25,6 +25,13 @@ export function salvarDados(chave, dadosParaSalvar) {
     localStorage.setItem(chave, converterParaUpload(dadosStorage));
 }
 
+export function salvarEstados(nomeDoEstado, estado) {
+    let estadosNoStorage = converterDownload(localStorage.getItem("estados")) || {};
+    estadosNoStorage[nomeDoEstado] = estado;
+
+    localStorage.setItem("estados", converterParaUpload(estadosNoStorage));
+}
+
 export function recuperarDados(chave) {
     return converterDownload(localStorage.getItem(chave));
 }

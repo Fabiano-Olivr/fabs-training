@@ -15,14 +15,14 @@ function converterParaUpload(objeto) {
 
 // FUNÇÕES PRINCIPAIS
 export function salvarDados(chave, dadosParaSalvar) {
-    let dadosStorage = converterDownload(localStorage.getItem(chave));
-    if (dadosStorage) {
-        dadosStorage.push(dadosParaSalvar);
-    } else {
-        dadosStorage = [dadosParaSalvar];
-    }
+    let dadosStorage = converterDownload(localStorage.getItem(chave)) || [];
+    dadosStorage.push(dadosParaSalvar);
 
     localStorage.setItem(chave, converterParaUpload(dadosStorage));
+}
+
+export function reescreverDados(chave, dadosParaRescrever) {
+    localStorage.setItem(chave, converterParaUpload(dadosParaRescrever));
 }
 
 export function salvarEstados(nomeDoEstado, estado) {

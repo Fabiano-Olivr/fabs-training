@@ -5,7 +5,7 @@
  */
 
 // IMPORTS DE MÓDULOS E DEPENDÊNCIAS
-import { recuperarDados, salvarDados } from "./storage.js";
+import { recuperarDados, salvarDados, reescreverDados } from "./storage.js";
 
 // REFERÊNCIAS AOS ELEMENTOS HTML 
 const outNomeFilme = document.querySelector("#nome-filme");
@@ -31,23 +31,36 @@ function renderizarInformacoesSecao(secao) {
     outHorarioSecao.innerText = `${dataSecaoFormat} às ${secao.horario}`;
 }
 
+function atualizarInformacoesCompra(assentos, valor) {
+    outTextoSelecionados.innerText = assentos;
+    outValorTotal.innerText = `R$ ${valor}`;
+}
+
+function recuperarIdSecao() {
+    return recuperarDados("estados").secaoIdTemp;
+}
+
+function recuperarSecoes() {
+    const todasAsSecoes = recuperarDados("secoes");
+    const secaoSelecionada = identificarSecaoSelecionada(todasAsSecoes, recuperarIdSecao());
+
+    return [todasAsSecoes, secaoSelecionada];
+}
+
 // FUNÇÕES PRINCIPAIS
 function inicializarEventos() {
-    const secaoSelecionada = buscarSecaoSelecionada();
+    const [, secaoSelecionada] = recuperarSecoes();
     renderizarInformacoesSecao(secaoSelecionada);
 }
 
-function buscarSecaoSelecionada() {
-    const todasAsSecoes = recuperarDados("secoes");
-    const idSecaoSelecionada = recuperarDados("estados");
-
-    return todasAsSecoes.find(secao => secao.idSecao === idSecaoSelecionada.secaoIdTemp);
+function identificarSecaoSelecionada(secoes, idSecaoSelecionada) {
+    return secoes.find(secao => secao.idSecao === idSecaoSelecionada);
 }
 
 function reservarIngressos() {
-    const informacoesSecao = buscarSecaoSelecionada();
-    const nomeCliente = inNomeCliente.value.trim();
+    const [todasAsSecoes, secaoSelecionada] = recuperarSecoes();
 
+    const nomeCliente = inNomeCliente.value.trim();
     if (!verificarNomeCliente(nomeCliente)) {
         alert("Informe um Nome Completo!");
         inNomeCliente.focus();
@@ -65,9 +78,20 @@ function reservarIngressos() {
     }
 
     const textoAssentosSelecionados = assentosSelecionados.map(assento => assento.innerText).join(", ");
-    const valorTotal = qtdAssentosSelecionado * Number(informacoesSecao.precoIngresso);
-    
-    /* Modificar o storage para adicionar a funcionalidade de acessar um objeto e modificar um atributo dele */
+    const valorTotal = qtdAssentosSelecionado * Number(secaoSelecionada.precoIngresso);
+
+    assentosSelecionados.forEach(assento => {
+        const ingresso = {
+            chave: "ingresso-" + crypto.randomUUID().slice(0, 5),
+            cliente: nomeCliente,
+            assento: assento.innerText
+        };
+        secaoSelecionada.ingressosVendidos.push(ingresso);
+    });
+
+    reescreverDados("secoes", todasAsSecoes);
+
+    /* Remover o Estado */
 }
 
 // EVENTOS

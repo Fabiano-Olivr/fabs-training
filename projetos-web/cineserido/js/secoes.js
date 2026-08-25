@@ -69,7 +69,7 @@ function renderizarSecoes(listaSecoes) {
                 <p><strong>Sala:</strong> ${secao.sala}</p>
                 <p><strong>Data:</strong> ${data}</p>
                 <p><strong>Horário:</strong> ${secao.horario}</p>
-                <p><strong>Vagas:</strong> 25/50</p>
+                <p><strong>Vagas:</strong> ${secao.ingressosVendidos.length}/${secao.capacidadeSala}</p>
                 <a href="reserva.html" class="botao-sucesso" data-secao-id="${secao.idSecao}">Reservar Assento</a>
             `;
 
@@ -90,12 +90,18 @@ function filtrarSecoes(listaSecoes, callback) {
 
     const secoesEncontradas = [];
     for (const secao of listaSecoes) {
+        /**
+         * Se, pelo menos uma das condições entrar, o filme não deve entrar no filtro.
+         */
         if (!buscarNome(nomeFilme, secao.filme.nome))
             continue;
         if (dataSecao !== "" && dataSecao !== secao.data)
             continue;
-        // if (comVagas)
-        // Fazer qtdIngressos - capacidadeSala > 0?
+        if (comVagas) {
+            const qtdIngressosVendidos = secao.ingressosVendidos.length;
+            if (qtdIngressosVendidos >= secao.capacidadeSala)
+                continue;
+        }
         if (numeroDaSala > 0 && numeroDaSala !== Number(secao.sala))
             continue;
 

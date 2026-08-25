@@ -5,7 +5,7 @@
  */
 
 // IMPORTS DE MÓDULOS E DEPENDÊNCIAS
-import { recuperarDados, salvarEstados } from "./storage.js";
+import { recuperarDados, salvarDados } from "./storage.js";
 
 // REFERÊNCIAS AOS ELEMENTOS HTML
 const formularioFiltroSecoes = document.querySelector("#formulario-filtro-secoes");
@@ -39,6 +39,13 @@ function renderizarOpcoesDeSalas(listaSecoes) {
 function buscarNome(nomeBuscado, nome) {
     const regEx = new RegExp(nomeBuscado, "gi");
     return regEx.test(nome);
+}
+
+function criarObjetoDeEstado(identificadorScript, nomeDado, dado) {
+    return {
+        id: identificadorScript,
+        [nomeDado]: dado
+    };
 }
 
 // FUNÇÕES PRINCIPAIS
@@ -107,7 +114,7 @@ formularioFiltroSecoes.addEventListener("submit", function (e) {
 conteinerSessoes.addEventListener("click", function (e) {
     if (e.target.classList.contains("botao-sucesso")) {
         const idSecao = e.target.dataset.secaoId; // obtém o id da seção atribuido ao elemento <a> do botão clicado
-        salvarEstados("secaoIdTemp", idSecao);
+        salvarDados("estados", criarObjetoDeEstado("secoes", "idSecaoEscolhida", idSecao));
     }
 });
 

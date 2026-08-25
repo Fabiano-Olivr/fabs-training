@@ -5,7 +5,7 @@
  */
 
 // IMPORTS DE MÓDULOS E DEPENDÊNCIAS
-import { recuperarDados, salvarDados, reescreverDados } from "./storage.js";
+import { recuperarDados, salvarDados, reescreverDados, removerDados } from "./storage.js";
 
 // REFERÊNCIAS AOS ELEMENTOS HTML 
 const outNomeFilme = document.querySelector("#nome-filme");
@@ -37,7 +37,7 @@ function atualizarInformacoesCompra(assentos, valor) {
 }
 
 function recuperarIdSecao() {
-    return recuperarDados("estados").secaoIdTemp;
+    return recuperarDados("estados").find(estado => estado.id === "secoes").idSecaoEscolhida;
 }
 
 function recuperarSecoes() {
@@ -90,8 +90,10 @@ function reservarIngressos() {
     });
 
     reescreverDados("secoes", todasAsSecoes);
+    console.log("Seus assentos foram reservados. Bom Filme!");
 
-    /* Remover o Estado */
+    removerDados("estados", "secoes");
+    inNomeCliente.value = "";
 }
 
 // EVENTOS

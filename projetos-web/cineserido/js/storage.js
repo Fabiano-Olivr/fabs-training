@@ -37,7 +37,7 @@ export function recuperarDados(chave) {
 }
 
 export function removerDados(chave, idDado) {
-    const dados = converterDownload(localStorage.getItem("filmes"));
+    const dados = converterDownload(localStorage.getItem(chave));
     if (dados) {
         const index = dados.findIndex(dado => dado.id === idDado);
         dados.splice(index, 1);

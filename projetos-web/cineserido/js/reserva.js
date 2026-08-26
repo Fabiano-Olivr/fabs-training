@@ -90,9 +90,8 @@ function reservarIngressos() {
     });
 
     reescreverDados("secoes", todasAsSecoes);
-    console.log("Seus assentos foram reservados. Bom Filme!");
+    alert("Seus assentos foram reservados. Bom Filme!");
 
-    removerDados("estados", "secoes");
     inNomeCliente.value = "";
 }
 

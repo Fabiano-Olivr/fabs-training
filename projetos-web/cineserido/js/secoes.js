@@ -5,7 +5,7 @@
  */
 
 // IMPORTS DE MÓDULOS E DEPENDÊNCIAS
-import { recuperarDados, salvarDados } from "./storage.js";
+import { recuperarDados, salvarDados, reescreverDados } from "./storage.js";
 
 // REFERÊNCIAS AOS ELEMENTOS HTML
 const formularioFiltroSecoes = document.querySelector("#formulario-filtro-secoes");
@@ -41,11 +41,24 @@ function buscarNome(nomeBuscado, nome) {
     return regEx.test(nome);
 }
 
-function criarObjetoDeEstado(identificadorScript, nomeDado, dado) {
-    return {
-        id: identificadorScript,
-        [nomeDado]: dado
+function salvarIdSecaoEscolhida(idSecao) {
+    const estadosPaginaAtual = {
+        id: "secoes",
+        idSecaoEscolhida: idSecao
     };
+
+    const todosOsEstados = recuperarDados("estados");
+    if (todosOsEstados) {
+        const indexEstadoPaginaAtual = todosOsEstados.findIndex(estado => estado.id === "secoes");
+        if (indexEstadoPaginaAtual !== -1) {
+            todosOsEstados[indexEstadoPaginaAtual] = estadosPaginaAtual;
+            reescreverDados("estados", todosOsEstados);
+        } else {
+            salvarDados("estados", estadosPaginaAtual);
+        }
+    } else {
+        salvarDados("estados", estadosPaginaAtual);
+    }
 }
 
 // FUNÇÕES PRINCIPAIS
@@ -120,7 +133,7 @@ formularioFiltroSecoes.addEventListener("submit", function (e) {
 conteinerSessoes.addEventListener("click", function (e) {
     if (e.target.classList.contains("botao-sucesso")) {
         const idSecao = e.target.dataset.secaoId; // obtém o id da seção atribuido ao elemento <a> do botão clicado
-        salvarDados("estados", criarObjetoDeEstado("secoes", "idSecaoEscolhida", idSecao));
+        salvarIdSecaoEscolhida(idSecao);
     }
 });
 

@@ -51,6 +51,7 @@ function recuperarSecoes() {
 function inicializarEventos() {
     const [, secaoSelecionada] = recuperarSecoes();
     renderizarInformacoesSecao(secaoSelecionada);
+    renderizarMapaAssentos(secaoSelecionada);
 }
 
 function identificarSecaoSelecionada(secoes, idSecaoSelecionada) {
@@ -93,6 +94,46 @@ function reservarIngressos() {
     alert("Seus assentos foram reservados. Bom Filme!");
 
     inNomeCliente.value = "";
+}
+
+function renderizarMapaAssentos(secao) {
+    const qtdAssentos = secao.capacidadeSala;
+    const assentosReservados = secao.ingressosVendidos.map(ingresso => ingresso.assento);
+    outMapaAssentos.innerHTML = "";
+
+    const qtdFileiras = Math.ceil(qtdAssentos / 10);
+    const qtdAssentosUtilmaFileira = (qtdAssentos % 10);
+    for (let i = 0; i < qtdFileiras; i++) {
+        const rotuloFileira = String.fromCharCode(i + 65);
+        const conteinerFileiraAtual = document.createElement("div");
+        conteinerFileiraAtual.className = "fileira-assentos";
+
+        conteinerFileiraAtual.innerHTML = `
+            <span class="rotulo-fileira">${rotuloFileira}</span>
+        `;
+
+        const isUltima = i === qtdFileiras - 1;
+        for (let a = 0; a < 10; a++) {
+            const rotuloAssento = rotuloFileira + (a + 1);
+
+            conteinerFileiraAtual.innerHTML += `
+                <button class="assento">${rotuloAssento}</button>
+            `;
+
+            const isReservado = assentosReservados.includes(rotuloAssento);
+            if (isReservado) {
+                conteinerFileiraAtual.classList.add("ocupado");
+                conteinerFileiraAtual.disabled = true;
+            } else {
+                conteinerFileiraAtual.classList.add("disponivel");
+            }
+
+            if (isUltima && a === qtdAssentosUtilmaFileira -1) {
+                break;
+            }
+        }
+        outMapaAssentos.appendChild(conteinerFileiraAtual);
+    }
 }
 
 // EVENTOS

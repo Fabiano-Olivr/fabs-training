@@ -47,6 +47,12 @@ function recuperarSecoes() {
     return [todasAsSecoes, secaoSelecionada];
 }
 
+function obterAssentosSelecionados() {
+    // retorna uma NodeList contendo todos os botões de assentos selecionados
+    const nodeAssentosSelecionados = document.querySelectorAll("#mapa-assentos .assento.selecionado");
+    return [...nodeAssentosSelecionados]; // converte a nodeList para vetor
+}
+
 // FUNÇÕES PRINCIPAIS
 function inicializarEventos() {
     const [, secaoSelecionada] = recuperarSecoes();
@@ -68,13 +74,11 @@ function reservarIngressos() {
         return;
     }
 
-    // retorna uma NodeList contendo todos os botões de assentos selecionados
-    const nodeAssentosSelecionados = document.querySelectorAll("#mapa-assentos .assento.selecionado");
-    const assentosSelecionados = [...nodeAssentosSelecionados]; // converte a nodeList para vetor
+    const assentosSelecionados = obterAssentosSelecionados();
     const qtdAssentosSelecionado = assentosSelecionados.length;
 
     if (qtdAssentosSelecionado < 1) {
-        console.log("Selecione, pelo menos, um assento!");
+        alert("Selecione, pelo menos, um assento!");
         return;
     }
 
@@ -94,6 +98,7 @@ function reservarIngressos() {
     alert("Seus assentos foram reservados. Bom Filme!");
 
     inNomeCliente.value = "";
+    renderizarMapaAssentos(secaoSelecionada);
 }
 
 function renderizarMapaAssentos(secao) {
@@ -119,16 +124,18 @@ function renderizarMapaAssentos(secao) {
             conteinerFileiraAtual.innerHTML += `
                 <button class="assento">${rotuloAssento}</button>
             `;
+            const botaoAssento = [...conteinerFileiraAtual.querySelectorAll(".assento")]
+                .find(assento => assento.innerText === rotuloAssento);
 
             const isReservado = assentosReservados.includes(rotuloAssento);
             if (isReservado) {
-                conteinerFileiraAtual.classList.add("ocupado");
-                conteinerFileiraAtual.disabled = true;
+                botaoAssento.classList.add("ocupado");
+                botaoAssento.disabled = true;
             } else {
-                conteinerFileiraAtual.classList.add("disponivel");
+                botaoAssento.classList.add("disponivel");
             }
 
-            if (isUltima && a === qtdAssentosUtilmaFileira -1) {
+            if (isUltima && a === qtdAssentosUtilmaFileira - 1) {
                 break;
             }
         }
@@ -136,10 +143,23 @@ function renderizarMapaAssentos(secao) {
     }
 }
 
+function gerarInformacoesDeCompra(callback) {
+    const assentosSelecionados = obterAssentosSelecionados().map(assento => assento.innerText);
+    const [, secaoSelecionada] = recuperarSecoes();
+    const textoAssentosSelecionados = assentosSelecionados === [] ? "..." : assentosSelecionados.join(" , ");
+    const valorTotalCompra = assentosSelecionados.length * secaoSelecionada.precoIngresso;
+    callback(textoAssentosSelecionados, valorTotalCompra);
+}
+
 // EVENTOS
 formularioReserva.addEventListener("submit", function (e) {
     e.preventDefault();
     reservarIngressos();
+});
+
+outMapaAssentos.addEventListener("click", function (e) {
+    e.target.classList.toggle("selecionado");
+    gerarInformacoesDeCompra(atualizarInformacoesCompra);
 });
 
 // INICIALIZAÇÃO

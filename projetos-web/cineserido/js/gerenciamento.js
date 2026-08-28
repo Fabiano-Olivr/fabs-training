@@ -23,6 +23,7 @@ const inDataSecao = document.querySelector("#data-sessao");
 const inHorarioSessao = document.querySelector("#horario-sessao");
 const inCapacidadeSalaSecao = document.querySelector("#capacidade-sala-secao");
 const inPrecoIngressoSecao = document.querySelector("#preco-ingresso-secao");
+const outTabelaReservas = document.querySelector("#tabela-reservas");
 
 // UTILITÁRIOS
 function obterIntervaloDasSecoes(dataHoraInicio, duracaoFilme) {
@@ -113,12 +114,40 @@ function criarFilme(nomeFilme, duracaoFilme, generosFilme, classificacaoFilme, b
     }
 }
 
+function renderizarListaReservas(ingressosVendidos) {
+    outTabelaReservas.innerHTML = "";
+
+    if (ingressosVendidos.length === 0) {
+        outTabelaReservas.innerHTML = `
+            <p>Nenhum Ingresso Encontrado</p>
+        `;
+    } else {
+        ingressosVendidos.forEach(ingressosDaSecao => {
+            ingressosDaSecao.forEach(ingresso => {
+                const linhaIngresso = document.createElement("tr");
+                linhaIngresso.innerHTML = `
+                    <td>${ingresso.chave}</td>
+                    <td>${ingresso.nome}</td>
+                    <td>${ingresso.filme}</td>
+                    <td>${ingresso.dataHoraSecao}</td>
+                    <td>${ingresso.assentos.join(" , ")}</td>
+                    <td><button class="botao-perigo">Cancelar</button></td>
+                `;
+                outTabelaReservas.appendChild(linhaIngresso);
+            });
+        });
+    }
+}
+
 // FUNÇÕES PRINCIPAIS
 function inicializarEventos() {
     renderizarGeneros();
 
-    const dados = recuperarDados("filmes");
-    atualizarUI(dados);
+    const filmes = recuperarDados("filmes");
+    atualizarUI(filmes);
+
+    const secoes = recuperarDados("secoes");
+    organizarIngressos(secoes, renderizarListaReservas);
 }
 
 function adicionarNovoFilme() {
@@ -202,7 +231,7 @@ function adicionarNovaSecao() {
             fimSecaoReservada = fimSecaoReservada.toLocaleTimeString("pt-BR").split(":")
                 .slice(0, 2)
                 .join(":"); // Quebra a string da hora (00:00:00) em vetor, pega somente as duas primeiras posições e transforma em uma string novamente (00:00).
-            const mensagemSalaOcupada = `Em ${inicioNovaSecao.toLocaleDateString("pt-BR")}, a sala ${salaNovaSecao} já está reservada no intervalo das `+
+            const mensagemSalaOcupada = `Em ${inicioNovaSecao.toLocaleDateString("pt-BR")}, a sala ${salaNovaSecao} já está reservada no intervalo das ` +
                 `${secaoReservada.horario} às ${fimSecaoReservada} para ${secaoReservada.filme.nome.toUpperCase()}! Selecione outra sala ou outro horário.`
             alert(mensagemSalaOcupada);
             return;
@@ -213,6 +242,37 @@ function adicionarNovaSecao() {
         salvarDados("secoes", novaSecao);
     }
     formulario_cadastro_secao.reset();
+}
+
+function organizarIngressos(secoes, callback) {
+    const ingressoPorSecao = [];
+
+    if (secoes) {
+        secoes.forEach(secao => {
+            const clientesUnicos = new Set();
+            const ingressosPorCliente = secao.ingressosVendidos.reduce((acc, ingresso) => {
+                if (clientesUnicos.has(ingresso.cliente)) {
+                    acc.find(cliente => cliente.nome === ingresso.cliente)
+                        .assentos.push(ingresso.assento);
+                    return acc;
+                }
+    
+                clientesUnicos.add(ingresso.cliente);
+                const dataHora = new Date(`${secao.data}T${secao.horario}`);
+                acc.push({
+                    chave: ingresso.chave.replace("ingresso-", "#"),
+                    nome: ingresso.cliente,
+                    filme: secao.filme.nome,
+                    dataHoraSecao: `${dataHora.toLocaleDateString()} - ${dataHora.toLocaleTimeString().slice(0, 5)}`,
+                    assentos: [ingresso.assento]
+                });
+                return acc;
+            }, []);
+            ingressoPorSecao.push(ingressosPorCliente);
+        });
+    }
+
+    callback(ingressoPorSecao);
 }
 
 // EVENTOS

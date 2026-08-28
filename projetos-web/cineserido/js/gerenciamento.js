@@ -5,7 +5,7 @@
  */
 
 // IMPORTS DE MÓDULOS E DEPENDÊNCIAS
-import { salvarDados, recuperarDados, removerDados } from "./storage.js";
+import { salvarDados, recuperarDados, removerDados, reescreverDados } from "./storage.js";
 
 // REFERÊNCIAS AOS ELEMENTOS HTML
 const formulario_cadastro_filme = document.querySelector("#form-cadastro-filme");
@@ -131,7 +131,7 @@ function renderizarListaReservas(ingressosVendidos) {
                     <td>${ingresso.filme}</td>
                     <td>${ingresso.dataHoraSecao}</td>
                     <td>${ingresso.assentos.join(" , ")}</td>
-                    <td><button class="botao-perigo">Cancelar</button></td>
+                    <td><button class="botao-perigo" data-secao-nome="${ingresso.secao},${ingresso.nome}">Cancelar</button></td>
                 `;
                 outTabelaReservas.appendChild(linhaIngresso);
             });
@@ -261,6 +261,7 @@ function organizarIngressos(secoes, callback) {
                 const dataHora = new Date(`${secao.data}T${secao.horario}`);
                 acc.push({
                     chave: ingresso.chave.replace("ingresso-", "#"),
+                    secao: secao.idSecao.replace("secao-", ""),
                     nome: ingresso.cliente,
                     filme: secao.filme.nome,
                     dataHoraSecao: `${dataHora.toLocaleDateString()} - ${dataHora.toLocaleTimeString().slice(0, 5)}`,
@@ -273,6 +274,24 @@ function organizarIngressos(secoes, callback) {
     }
 
     callback(ingressoPorSecao);
+}
+
+function cancelarReservas(informacoesIngressos) {
+    let [idSecao, cliente] = informacoesIngressos.split(",");
+    idSecao = "secao-" + idSecao;
+
+    const secoes = recuperarDados("secoes");
+    const secaoSelecionada = secoes.find(secao => secao.idSecao === idSecao);
+    secaoSelecionada.ingressosVendidos = secaoSelecionada.ingressosVendidos.reduce((acc, ingresso) => {
+        if (ingresso.cliente === cliente) {
+            return acc;
+        }
+        acc.push(ingresso);
+        return acc;
+    }, []);
+
+    reescreverDados("secoes", secoes);
+    organizarIngressos(secoes, renderizarListaReservas);
 }
 
 // EVENTOS
@@ -291,6 +310,12 @@ outTabelaRemocao.addEventListener("click", function (e) {
 formulario_cadastro_secao.addEventListener("submit", function (e) {
     e.preventDefault();
     adicionarNovaSecao();
+});
+
+outTabelaReservas.addEventListener("click", function (e) {
+    if (e.target.classList.contains("botao-perigo")) {
+        cancelarReservas(e.target.dataset.secaoNome);
+    }
 });
 
 // INICIALIZAÇÃO

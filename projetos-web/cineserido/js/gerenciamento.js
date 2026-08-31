@@ -256,7 +256,7 @@ function organizarIngressos(secoes, callback) {
                         .assentos.push(ingresso.assento);
                     return acc;
                 }
-    
+
                 clientesUnicos.add(ingresso.cliente);
                 const dataHora = new Date(`${secao.data}T${secao.horario}`);
                 acc.push({
@@ -269,7 +269,8 @@ function organizarIngressos(secoes, callback) {
                 });
                 return acc;
             }, []);
-            ingressoPorSecao.push(ingressosPorCliente);
+            if (ingressosPorCliente.length !== 0)
+                ingressoPorSecao.push(ingressosPorCliente);
         });
     }
 

@@ -99,6 +99,7 @@ function reservarIngressos() {
 
     inNomeCliente.value = "";
     renderizarMapaAssentos(secaoSelecionada);
+    atualizarInformacoesCompra("", "0,00");
 }
 
 function renderizarMapaAssentos(secao) {
